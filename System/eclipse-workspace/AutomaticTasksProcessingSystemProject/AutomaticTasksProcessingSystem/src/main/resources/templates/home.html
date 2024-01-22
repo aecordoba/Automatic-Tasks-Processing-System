@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments/head.html :: head(#{common.header})}"></div>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<img th:src="@{/images/rubik.png}" alt="Rubik" />
+			<h1 th:text="#{home.welcome}"></h1>
+		</header>
+		<nav></nav>
+		<main></main>
+		<footer th:replace="~{fragments/footer.html :: footer}"> </footer>
+	</div>
+</body>
+</html>
