@@ -20,12 +20,12 @@
  * 		StandardTask.java
  *  Adrián E. Córdoba [software.asia@gmail.com]		Jan 21, 2024
  */
-package ar.com.kaikyo.app.atps.lib.tasks;
+package ar.com.kaikyo.app.atps.libs.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.kaikyo.app.atps.lib.tasks.tools.Tool;
+import ar.com.kaikyo.app.atps.libs.tasks.tools.Tool;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]

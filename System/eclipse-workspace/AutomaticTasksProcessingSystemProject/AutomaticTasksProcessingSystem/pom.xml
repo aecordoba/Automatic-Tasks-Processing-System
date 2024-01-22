@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ar.com.kaikyo.app.atps</groupId>
 	<artifactId>AutomaticTasksProcessingSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Automatic Tasks Processing System</name>
 	<description>Automatic Tasks Processing System</description>
+	<inceptionYear>2024</inceptionYear>
+	<organization>
+		<name>Kaikyo M.C.S.</name>
+	</organization>
+	<developers>
+		<developer>
+			<name>Adrián E. Córdoba</name>
+			<id>aecordoba</id>
+			<organization>Manning</organization>
+			<roles>
+				<role>System Developer</role>
+			</roles>
+		</developer>
+	</developers>
 	
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,7 +74,7 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>ar.com.kaikyo.app.atps.lib</groupId>
+			<groupId>ar.com.kaikyo.app.atps.libs</groupId>
 			<artifactId>Tasks</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -85,5 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

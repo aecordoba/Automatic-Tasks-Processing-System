@@ -25,7 +25,7 @@ package ar.com.kaikyo.app.atps.core.jobs;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.kaikyo.app.atps.lib.tasks.Task;
+import ar.com.kaikyo.app.atps.libs.tasks.Task;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]

@@ -20,7 +20,7 @@
  * 		Tool.java
  *  Adrián E. Córdoba [software.asia@gmail.com]		Jan 21, 2024
  */
-package ar.com.kaikyo.app.atps.lib.tasks.tools;
+package ar.com.kaikyo.app.atps.libs.tasks.tools;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
