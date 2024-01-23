@@ -6,6 +6,58 @@ CREATE SCHEMA IF NOT EXISTS `ATPS` DEFAULT CHARACTER SET utf8 ;
 USE `ATPS` ;
 
 -- -----------------------------------------------------
+-- Table `ATPS`.`Users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ATPS`.`Users` ;
+
+CREATE TABLE IF NOT EXISTS `ATPS`.`Users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(128) NOT NULL,
+  `enabled` TINYINT NULL,
+  `first_name` VARCHAR(15) NOT NULL,
+  `middle_name` VARCHAR(15) NULL,
+  `last_name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ATPS`.`Authorities`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ATPS`.`Authorities` ;
+
+CREATE TABLE IF NOT EXISTS `ATPS`.`Authorities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ATPS`.`Users_Authorities`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ATPS`.`Users_Authorities` ;
+
+CREATE TABLE IF NOT EXISTS `ATPS`.`Users_Authorities` (
+  `user` INT NOT NULL,
+  `authority` INT NOT NULL,
+  INDEX `fk_Users_Authorities_Users_idx` (`user` ASC),
+  INDEX `fk_Users_Authorities_Authorities_idx` (`authority` ASC),
+  CONSTRAINT `fk_Users_Authorities_Users`
+    FOREIGN KEY (`user`)
+    REFERENCES `ATPS`.`Users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Users_Authorities_Authorities`
+    FOREIGN KEY (`authority`)
+    REFERENCES `ATPS`.`Authorities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `ATPS`.`Tools`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ATPS`.`Tools` ;
