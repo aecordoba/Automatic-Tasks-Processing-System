@@ -6,10 +6,32 @@
 <body>
 	<div class="container">
 		<header>
-			<img th:src="@{/images/rubik.png}" alt="Rubik" />
+			<img th:src="@{/images/rubik.png}" alt="Rubik image" />
 			<h1 th:text="#{home.welcome}"></h1>
 		</header>
-		<nav></nav>
+		<div class="user">
+			<div th:inline="text">[[${#httpServletRequest.remoteUser}]]</div>
+			<br>
+			<span th:if="${#httpServletRequest.remoteUser}">
+				<form method="POST" th:action="@{/logout}" id="logoutForm">
+					<input type="submit" th:value="#{common.logout}" />
+				</form>
+			</span>
+			<span th:unless="${#httpServletRequest.remoteUser}">
+				<form method="GET" th:action="@{/login}">
+					<input type="submit" th:value="#{common.login}" />
+				</form>
+			</span>
+		</div>
+		<nav>
+			<ul>
+				<div sec:authorize="hasAuthority('ADMIN')">
+					<li><a th:href="@{/user-register}" id="userRegister" th:text="#{home.userregister}"></a></li>
+				</div>
+				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+				</div>
+			</ul>
+		</nav>
 		<main></main>
 		<footer th:replace="~{fragments/footer.html :: footer}"> </footer>
 	</div>
