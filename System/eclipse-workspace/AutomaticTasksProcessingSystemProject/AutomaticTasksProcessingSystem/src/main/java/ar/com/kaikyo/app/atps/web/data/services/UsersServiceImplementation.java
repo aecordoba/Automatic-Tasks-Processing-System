@@ -22,12 +22,15 @@
  */
 package ar.com.kaikyo.app.atps.web.data.services;
 
+import org.springframework.stereotype.Service;
+
 import ar.com.kaikyo.app.atps.web.data.model.User;
 import ar.com.kaikyo.app.atps.web.data.repositories.UsersRepository;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
+@Service
 public class UsersServiceImplementation implements UsersService {
 	private UsersRepository usersRepository;
 

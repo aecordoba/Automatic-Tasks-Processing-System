@@ -46,7 +46,7 @@ public class WebConfigutationTest {
 
 	@Test
 	public void testHomePage() throws Exception {
-		mockMvc.perform(get("/"))
+		mockMvc.perform(get("https://localhost:8443/"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("home"))
 				.andExpect(content().string(containsString("Automatic Tasks Processing System")));

@@ -7,7 +7,7 @@
 	<div class="container">
 		<header>
 			<img th:src="@{/images/rubik.png}" alt="Rubik image" />
-			<h1>RADIUS Manager System</h1>
+			<h1 th:text="#{common.header}"></h1>
 		</header>
 		<main class="login">
 			<form method="post" th:action="@{/login}" id="loginForm">

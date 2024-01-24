@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <div th:replace="~{fragments/head.html :: head(#{common.header})}"></div>
 </head>
@@ -10,26 +11,25 @@
 			<h1 th:text="#{home.welcome}"></h1>
 		</header>
 		<div class="user">
-			<div th:inline="text">[[${#httpServletRequest.remoteUser}]]</div>
-			<br>
-			<span th:if="${#httpServletRequest.remoteUser}">
+			<div sec:authorize="isAuthenticated()">
+				<div sec:authentication="name"></div>
+				<br>
 				<form method="POST" th:action="@{/logout}" id="logoutForm">
 					<input type="submit" th:value="#{common.logout}" />
 				</form>
-			</span>
-			<span th:unless="${#httpServletRequest.remoteUser}">
+			</div>
+			<div sec:authorize="!isAuthenticated()">
 				<form method="GET" th:action="@{/login}">
 					<input type="submit" th:value="#{common.login}" />
 				</form>
-			</span>
+			</div>
 		</div>
 		<nav>
 			<ul>
 				<div sec:authorize="hasAuthority('ADMIN')">
 					<li><a th:href="@{/user-register}" id="userRegister" th:text="#{home.userregister}"></a></li>
 				</div>
-				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-				</div>
+				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')"></div>
 			</ul>
 		</nav>
 		<main></main>

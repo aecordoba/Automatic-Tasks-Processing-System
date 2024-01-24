@@ -50,14 +50,26 @@ public class SecurityConfiguration {
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/**", "/login").permitAll()
+		http.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/userRegister").hasAuthority("ADMIN")
-				.anyRequest().authenticated())
+				.requestMatchers("/", "/images/**", "/styles/**").permitAll())
 				.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
 						.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
 						.defaultSuccessUrl("/", true).permitAll())
-				.logout(logout -> logout.logoutSuccessHandler(customLogoutSuccessHandler).logoutUrl("/"))
+				.logout(logout -> logout.logoutSuccessHandler(customLogoutSuccessHandler).logoutSuccessUrl("/"))
 				.exceptionHandling(exception -> exception.accessDeniedPage("/"));
+
+		// http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/**",
+		// "/login").permitAll()
+		// .requestMatchers("/userRegister").hasAuthority("ADMIN")
+		// .anyRequest().authenticated())
+		// .formLogin(formLogin ->
+		// formLogin.loginPage("/login").usernameParameter("user")
+		// .passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
+		// .defaultSuccessUrl("/", true).permitAll())
+		// .logout(logout ->
+		// logout.logoutSuccessHandler(customLogoutSuccessHandler).logoutSuccessUrl("/"))
+		// .exceptionHandling(exception -> exception.accessDeniedPage("/"));
 
 		return http.build();
 
