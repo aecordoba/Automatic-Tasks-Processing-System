@@ -25,12 +25,14 @@ package ar.com.kaikyo.app.atps.web.controllers.security.listeners;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
+import org.springframework.stereotype.Component;
 
 import ar.com.kaikyo.app.atps.web.controllers.security.services.LoginAttemptsService;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
+@Component
 public class AuthenticationFailureEventListener
 		implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 	@Autowired

@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.stereotype.Component;
 
 import ar.com.kaikyo.app.atps.web.controllers.security.services.LoginAttemptsService;
 import ar.com.kaikyo.app.atps.web.data.model.User;
@@ -34,6 +35,7 @@ import ar.com.kaikyo.app.atps.web.data.model.User;
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
+@Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 	private static final Logger log = LogManager.getLogger(AuthenticationSuccessEventListener.class);
 	@Autowired
