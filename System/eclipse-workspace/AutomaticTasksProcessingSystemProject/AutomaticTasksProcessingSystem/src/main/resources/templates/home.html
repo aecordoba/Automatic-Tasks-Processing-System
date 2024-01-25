@@ -26,10 +26,11 @@
 		</div>
 		<nav>
 			<ul>
+				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OBS')"></div>
+				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')"></div>
 				<div sec:authorize="hasAuthority('ADMIN')">
 					<li><a th:href="@{/user-register}" id="userRegister" th:text="#{home.userregister}"></a></li>
 				</div>
-				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')"></div>
 			</ul>
 		</nav>
 		<main></main>

@@ -51,7 +51,7 @@ public class SecurityConfiguration {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/userRegister").hasAuthority("ADMIN")
+				.requestMatchers("/user-register").hasAuthority("ADMIN")
 				.requestMatchers("/", "/images/**", "/styles/**").permitAll())
 				.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
 						.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
