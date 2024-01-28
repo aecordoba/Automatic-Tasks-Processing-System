@@ -101,26 +101,17 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ATPS`.`Tasks_Tools` ;
 
 CREATE TABLE IF NOT EXISTS `ATPS`.`Tasks_Tools` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `task` INT NOT NULL,
   `tool` INT NOT NULL,
   `order` TINYINT NOT NULL,
-  `state` INT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_Tasks_Tools_Tasks_idx` (`task` ASC),
   INDEX `fk_Tasks_Tools_Tools_idx` (`tool` ASC),
   UNIQUE INDEX `task_order_UNIQUE` (`task` ASC, `order` ASC),
-  CONSTRAINT `fk_Tasks_Tools_Tasks`
-    FOREIGN KEY (`task`)
-    REFERENCES `ATPS`.`Tasks` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tasks_Tools_Tools`
     FOREIGN KEY (`tool`)
     REFERENCES `ATPS`.`Tools` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tasks_Tools_Tools_Tool_States`
-    FOREIGN KEY (`state`)
-    REFERENCES `ATPS`.`Tool_States` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -146,7 +137,9 @@ CREATE TABLE IF NOT EXISTS `ATPS`.`Jobs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `task` INT NOT NULL,
-  `state` INT NULL,
+  `job_state` INT NULL,
+  `tool` INT NULL,
+  `tool_state` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_Jobs_Tasks`
@@ -155,10 +148,21 @@ CREATE TABLE IF NOT EXISTS `ATPS`.`Jobs` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Jobs_Job_States`
-    FOREIGN KEY (`state`)
+    FOREIGN KEY (`job_state`)
     REFERENCES `ATPS`.`Job_States` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Jobs_Tasks_Tools`
+    FOREIGN KEY (`tool`)
+    REFERENCES `ATPS`.`Tasks_Tools` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Jobs_Tool_States`
+    FOREIGN KEY (`tool_state`)
+    REFERENCES `ATPS`.`Tool_States` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+
 
 ENGINE = InnoDB;
 
