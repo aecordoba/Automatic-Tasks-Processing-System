@@ -52,6 +52,7 @@ public class SecurityConfiguration {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/user-register").hasAuthority("ADMIN")
+				.requestMatchers("/system-control").hasAnyAuthority("ADMIN", "USER", "OBSERVER")
 				.requestMatchers("/", "/images/**", "/styles/**").permitAll())
 				.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
 						.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)

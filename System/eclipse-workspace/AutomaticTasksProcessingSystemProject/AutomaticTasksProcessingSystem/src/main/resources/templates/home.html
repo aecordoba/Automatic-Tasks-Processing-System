@@ -26,7 +26,9 @@
 		</div>
 		<nav>
 			<ul>
-				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OBS')"></div>
+				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OBSERVER')">
+					<li><a th:href="@{/system-control}" id="systemControl" th:text="#{home.systemcontrol}"></a></li>
+				</div>
 				<div sec:authorize="hasAnyAuthority('ADMIN', 'USER')"></div>
 				<div sec:authorize="hasAuthority('ADMIN')">
 					<li><a th:href="@{/user-register}" id="userRegister" th:text="#{home.userregister}"></a></li>
