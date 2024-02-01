@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EngineState {
 	public enum State {
-		STOPPED, READY, RUNNING, STOPPING
+		STOPPED, STARTING, RUNNING, STOPPING
 	};
 
 	private State state;

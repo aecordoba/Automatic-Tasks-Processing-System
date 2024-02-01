@@ -22,10 +22,9 @@
  */
 package ar.com.kaikyo.app.atps.web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.com.kaikyo.app.atps.core.engine.state.EngineState;
@@ -36,16 +35,30 @@ import ar.com.kaikyo.app.atps.core.engine.state.EngineState;
 @Controller
 @RequestMapping("/system-control")
 public class SystemControlController {
-	@Autowired
 	private EngineState engineState;
 
-	@ModelAttribute(name = "engineState")
-	public EngineState getEngineState() {
-		return engineState;
+	public SystemControlController(EngineState engineState) {
+		super();
+		this.engineState = engineState;
 	}
 
 	@GetMapping
 	public String systemControlForm() {
+		return "private/system-control";
+	}
+
+	@PostMapping
+	public String changeEngineState() {
+		String state = engineState.getState().toString();
+		if (state.equals(EngineState.State.STOPPED.toString())) {
+			engineState.setState(EngineState.State.STARTING);
+		} else if (state.equals(EngineState.State.STARTING.toString())) {
+			engineState.setState(EngineState.State.RUNNING);
+		} else if (state.equals(EngineState.State.RUNNING.toString())) {
+			engineState.setState(EngineState.State.STOPPING);
+		} else if (state.equals(EngineState.State.STOPPING.toString())) {
+			engineState.setState(EngineState.State.STOPPED);
+		}
 		return "private/system-control";
 	}
 }

@@ -3,8 +3,10 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <div th:replace="~{fragments/head.html :: head(#{systemcontrol.title})}"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="/scripts/state_monitor.js"></script>
 </head>
-<body>
+<body onload="state_refresh()">
 	<div class="container">
 		<header>
 			<img th:src="@{/images/rubik.png}" alt="Rubik" />
@@ -20,17 +22,17 @@
 				<legend>
 					<b th:text="#{systemcontrol.title}"></b>
 				</legend>
-				<form method="post" th:action="@{/system-control}" th:object="${engineState}">
+				<form method="post" th:action="@{/system-control}" >
 					<fieldset>
 						<legend>
 							<b th:text="#{systemcontrol.enginestate}"></b>
 						</legend>
 						<div class="row">
 							<div class="column">
-								<input type="text" id="engineState" th:field="*{state}" readonly>
+								<input type="text" id="engineState" readonly>
 							</div>
 							<div sec:authorize="hasAuthority('ADMIN')" class="column">
-								<input type="submit" th:value="#{systemcontrol.changestate}" />
+								<input type="submit" th:value="#{systemcontrol.changestate}"/>
 							</div>
 							<div sec:authorize="!hasAuthority('ADMIN')" class="column">
 								<input type="submit" th:value="#{systemcontrol.changestate}" disabled="disabled"/>
