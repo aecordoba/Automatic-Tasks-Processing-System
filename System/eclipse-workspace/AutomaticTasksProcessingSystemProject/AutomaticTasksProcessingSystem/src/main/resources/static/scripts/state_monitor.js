@@ -17,17 +17,15 @@ function get_state() {
 				case "STOPPED":
 					$("#engineState").addClass("stopped");
 					break;
-				case "STARTING":
-					$("#engineState").addClass("starting");
-					break;
 				case "RUNNING":
 					$("#engineState").addClass("running");
-					break;
-				case "STOPPING":
-					$("#engineState").addClass("stopping");
-					break;
 			};
 			$("#engineState").val(data["state"]);
+			if(data["stateTransition"]) {
+				$("#admin-submit").prop("disabled", true);
+			} else {
+				$("#admin-submit").prop("disabled", false);
+			}
         },
         error: function (e) {
         }

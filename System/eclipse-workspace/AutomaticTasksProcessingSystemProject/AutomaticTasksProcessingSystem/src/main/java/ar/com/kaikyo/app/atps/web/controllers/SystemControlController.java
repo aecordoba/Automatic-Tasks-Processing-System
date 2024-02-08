@@ -22,12 +22,16 @@
  */
 package ar.com.kaikyo.app.atps.web.controllers;
 
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ar.com.kaikyo.app.atps.core.engine.state.EngineState;
+import ar.com.kaikyo.app.atps.core.engine.state.EngineEvents;
+import ar.com.kaikyo.app.atps.core.engine.state.EngineStates;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -35,11 +39,11 @@ import ar.com.kaikyo.app.atps.core.engine.state.EngineState;
 @Controller
 @RequestMapping("/system-control")
 public class SystemControlController {
-	private EngineState engineState;
+	private StateMachine<EngineStates, EngineEvents> engineStateMachine;
 
-	public SystemControlController(EngineState engineState) {
+	public SystemControlController(StateMachine<EngineStates, EngineEvents> engineStateMachine) {
 		super();
-		this.engineState = engineState;
+		this.engineStateMachine = engineStateMachine;
 	}
 
 	@GetMapping
@@ -49,16 +53,7 @@ public class SystemControlController {
 
 	@PostMapping
 	public String changeEngineState() {
-		String state = engineState.getState().toString();
-		if (state.equals(EngineState.State.STOPPED.toString())) {
-			engineState.setState(EngineState.State.STARTING);
-		} else if (state.equals(EngineState.State.STARTING.toString())) {
-			engineState.setState(EngineState.State.RUNNING);
-		} else if (state.equals(EngineState.State.RUNNING.toString())) {
-			engineState.setState(EngineState.State.STOPPING);
-		} else if (state.equals(EngineState.State.STOPPING.toString())) {
-			engineState.setState(EngineState.State.STOPPED);
-		}
+		engineStateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(EngineEvents.CHANGE).build())).subscribe();
 		return "private/system-control";
 	}
 }

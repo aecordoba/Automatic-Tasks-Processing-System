@@ -1,5 +1,5 @@
 /*
- * 		EngineStateObserver.java
+ * 		EngineStates.java
  *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,19 +17,14 @@
  */
 
 /**
- * 		EngineStateObserver.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Jan 28, 2024
+ * 		State.java
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Feb 5, 2024
  */
 package ar.com.kaikyo.app.atps.core.engine.state;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-public abstract class EngineStateObserver {
-	protected EngineState engineState;
-
-	/**
-	 * 
-	 */
-	public abstract void update();
+public enum EngineStates {
+	STOPPED, RUNNING
 }
