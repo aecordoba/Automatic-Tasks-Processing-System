@@ -57,8 +57,4 @@ public class Loader {
 		Constructor<T> constructor = taskClass.getConstructor();
 		return constructor.newInstance();
 	}
-
-	public String getHello() {
-		return "Hello";
-	}
 }
