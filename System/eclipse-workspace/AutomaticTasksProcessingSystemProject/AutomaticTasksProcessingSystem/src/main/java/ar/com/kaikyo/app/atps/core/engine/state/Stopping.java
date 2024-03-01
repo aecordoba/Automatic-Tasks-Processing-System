@@ -1,5 +1,5 @@
 /*
- * 		EngineStates.java
+ * 		Stopping.java
  *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,43 @@
  */
 
 /**
- * 		State.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Feb 5, 2024
+ * 		Stopping.java
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
  */
 package ar.com.kaikyo.app.atps.core.engine.state;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-public enum EngineStates {
-	STOPPED, RUNNING
+public class Stopping implements State {
+	private EngineStateMachine engineStateMachine;
+
+	/**
+	 * @param engineStateMachine
+	 */
+	public Stopping(EngineStateMachine engineStateMachine) {
+		super();
+		this.engineStateMachine = engineStateMachine;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ar.com.kaikyo.app.atps.core.engine.state.State#changeState()
+	 */
+	@Override
+	public void changeState() {
+		engineStateMachine.setState(engineStateMachine.getStopped());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ar.com.kaikyo.app.atps.core.engine.state.State#getName()
+	 */
+	@Override
+	public StateName getName() {
+		return StateName.STOPPING;
+	}
+
 }

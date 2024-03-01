@@ -1,5 +1,5 @@
 /*
- * 		EngineEvent.java
+ * 		StateName.java
  *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,14 @@
  */
 
 /**
- * 		Event.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Feb 5, 2024
+ * 		StateName.java
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
  */
 package ar.com.kaikyo.app.atps.core.engine.state;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-public enum EngineEvents {
-	CHANGE
+public enum StateName {
+	STOPPED, STARTING, RUNNING, STOPPING
 }

@@ -1,6 +1,7 @@
 /**
  * 
  */
+let currentState = "";
 
 function state_refresh() {
 	get_state();
@@ -12,19 +13,28 @@ function get_state() {
 		type: "GET",
         url: "/state-change",
         success: function (data) {
-			$("#engineState").removeAttr("class");
-			switch(data["state"]){
-				case "STOPPED":
-					$("#engineState").addClass("stopped");
-					break;
-				case "RUNNING":
-					$("#engineState").addClass("running");
-			};
-			$("#engineState").val(data["state"]);
-			if(data["stateTransition"]) {
-				$("#admin-submit").prop("disabled", true);
-			} else {
-				$("#admin-submit").prop("disabled", false);
+			if(currentState != data["state"]){
+				currentState = data["state"];
+				$("#engineState").removeAttr("class");
+				switch(data["state"]){
+					case "STOPPED":
+						$("#engineState").addClass("stopped");
+						break;
+					case "STARTING":
+						$("#engineState").addClass("starting");
+						break;
+					case "RUNNING":
+						$("#engineState").addClass("running");
+						break;
+					case "STOPPING":
+						$("#engineState").addClass("stopping");
+				};
+				$("#engineState").val(data["state"]);
+				if(data["state"] == "STARTING" || data["state"] == "STOPPING") {
+					$("#admin-submit").prop("disabled", true);
+				} else {
+					$("#admin-submit").prop("disabled", false);
+				}
 			}
         },
         error: function (e) {

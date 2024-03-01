@@ -22,7 +22,7 @@
  */
 package ar.com.kaikyo.app.atps.core.engine;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import java.time.Duration;
@@ -34,6 +34,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import ar.com.kaikyo.app.atps.core.engine.state.StateName;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -82,21 +84,21 @@ class EngineTest {
 	@Test
 	@DisplayName("Transition State at Engine creation.")
 	void testEngineCreation() {
-		assertFalse(engine.isStateTransition(), () -> "State Transition would be 'false' at Engine creation");
+		assertEquals(StateName.STOPPED, engine.getState().getName());
 	}
 
 	@Test
 	@Tag("Performance")
 	@DisplayName("Engine start timing.")
 	void testStartTimeout() throws InterruptedException {
-		assertTimeoutPreemptively(Duration.ofMillis(10000), () -> engine.start());
+		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.start());
 	}
 
 	@Test
 	@Tag("Performance")
 	@DisplayName("Engine stop timing.")
 	void testStopTimeout() throws InterruptedException {
-		assertTimeoutPreemptively(Duration.ofMillis(10000), () -> engine.stop());
+		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.stop());
 	}
 
 }

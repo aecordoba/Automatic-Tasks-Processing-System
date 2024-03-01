@@ -18,54 +18,76 @@
 
 /**
  * 		Engine.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Feb 6, 2024
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
  */
 package ar.com.kaikyo.app.atps.core.engine;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import ar.com.kaikyo.app.atps.core.engine.state.EngineStateMachine;
+import ar.com.kaikyo.app.atps.core.engine.state.State;
+import ar.com.kaikyo.app.atps.core.engine.state.StateName;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
 @Component
 public class Engine {
-	private boolean stateTransition;
+	private EngineStateMachine engineStateMachine;
+
+	private static final Logger log = LogManager.getLogger(Engine.class);
 
 	/**
-	*
-	*/
-	public Engine() {
-		stateTransition = false;
-	}
-
-	public void start() {
-		stateTransition = true;
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stateTransition = false;
-	}
-
-	public void stop() {
-		stateTransition = true;
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stateTransition = false;
-	}
-
-	/**
-	 * @return the stateTransition
+	 * @param engineStateMachine
 	 */
-	public boolean isStateTransition() {
-		return stateTransition;
+	public Engine() {
+		super();
+		this.engineStateMachine = new EngineStateMachine();
+		log.info("Engine created in {} state.", getState().getName());
+	}
+
+	/**
+	 * 
+	 */
+	public void changeState() {
+		engineStateMachine.changeState();
+		if (engineStateMachine.getCurrentStateName() == StateName.STARTING)
+			start();
+		if (engineStateMachine.getCurrentStateName() == StateName.STOPPING)
+			stop();
+	}
+
+	/**
+	 * 
+	 */
+	public void start() {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		engineStateMachine.changeState();
+	}
+
+	/**
+	 * 
+	 */
+	public void stop() {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		engineStateMachine.changeState();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public State getState() {
+		return engineStateMachine.getCurrentState();
 	}
 }

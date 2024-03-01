@@ -22,16 +22,12 @@
  */
 package ar.com.kaikyo.app.atps.web.controllers;
 
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ar.com.kaikyo.app.atps.core.engine.state.EngineEvents;
-import ar.com.kaikyo.app.atps.core.engine.state.EngineStates;
-import reactor.core.publisher.Mono;
+import ar.com.kaikyo.app.atps.core.engine.Engine;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -39,11 +35,14 @@ import reactor.core.publisher.Mono;
 @Controller
 @RequestMapping("/system-control")
 public class SystemControlController {
-	private StateMachine<EngineStates, EngineEvents> engineStateMachine;
+	private Engine engine;
 
-	public SystemControlController(StateMachine<EngineStates, EngineEvents> engineStateMachine) {
+	/**
+	 * @param engine
+	 */
+	public SystemControlController(Engine engine) {
 		super();
-		this.engineStateMachine = engineStateMachine;
+		this.engine = engine;
 	}
 
 	@GetMapping
@@ -53,7 +52,7 @@ public class SystemControlController {
 
 	@PostMapping
 	public String changeEngineState() {
-		engineStateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(EngineEvents.CHANGE).build())).subscribe();
+		engine.changeState();
 		return "private/system-control";
 	}
 }

@@ -24,15 +24,12 @@ package ar.com.kaikyo.app.atps.web.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.statemachine.StateMachine;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.kaikyo.app.atps.core.engine.Engine;
-import ar.com.kaikyo.app.atps.core.engine.state.EngineEvents;
-import ar.com.kaikyo.app.atps.core.engine.state.EngineStates;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -40,30 +37,26 @@ import ar.com.kaikyo.app.atps.core.engine.state.EngineStates;
 @RestController
 @CrossOrigin(origins = "*")
 public class EngineStateMonitorController {
-	private StateMachine<EngineStates, EngineEvents> engineStateMachine;
 	private Engine engine;
 	private EngineStateResponse engineStateResponse;
 
 	/**
 	 * 
 	 */
-	public EngineStateMonitorController(StateMachine<EngineStates, EngineEvents> engineStateMachine, Engine engine) {
+	public EngineStateMonitorController(Engine engine) {
 		super();
-		this.engineStateMachine = engineStateMachine;
 		this.engine = engine;
 		this.engineStateResponse = new EngineStateResponse();
 	}
 
 	@RequestMapping(value = "/state-change", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EngineStateResponse> getNewEngineState() {
-		engineStateResponse.setState(engineStateMachine.getState().getId().toString());
-		engineStateResponse.setStateTransition(engine.isStateTransition());
+		engineStateResponse.setState(engine.getState().getName().toString());
 		return ResponseEntity.ok(engineStateResponse);
 	}
 
 	public class EngineStateResponse {
 		private String state;
-		private boolean stateTransition;
 
 		/**
 		 * @return the state
@@ -77,20 +70,6 @@ public class EngineStateMonitorController {
 		 */
 		public void setState(String state) {
 			this.state = state;
-		}
-
-		/**
-		 * @return the stateTransition
-		 */
-		public boolean isStateTransition() {
-			return stateTransition;
-		}
-
-		/**
-		 * @param stateTransition the stateTransition to set
-		 */
-		public void setStateTransition(boolean stateTransition) {
-			this.stateTransition = stateTransition;
 		}
 	}
 }
