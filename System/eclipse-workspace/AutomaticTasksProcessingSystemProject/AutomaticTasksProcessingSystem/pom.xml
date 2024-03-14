@@ -9,14 +9,14 @@
 		<version>3.2.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ar.com.kaikyo.app.atps</groupId>
+	<groupId>ar.com.dynamic.app.atps</groupId>
 	<artifactId>AutomaticTasksProcessingSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Automatic Tasks Processing System</name>
 	<description>Automatic Tasks Processing System</description>
 	<inceptionYear>2024</inceptionYear>
 	<organization>
-		<name>Kaikyo M.C.S.</name>
+		<name>Dynamic M.C.S.</name>
 	</organization>
 	<developers>
 		<developer>
