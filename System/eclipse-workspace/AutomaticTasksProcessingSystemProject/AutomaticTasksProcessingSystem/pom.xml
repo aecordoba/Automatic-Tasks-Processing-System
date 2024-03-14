@@ -9,7 +9,7 @@
 		<version>3.2.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ar.com.dynamic.app.atps</groupId>
+	<groupId>ar.com.dynamicmcs.app.atps</groupId>
 	<artifactId>AutomaticTasksProcessingSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Automatic Tasks Processing System</name>
@@ -74,7 +74,7 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>ar.com.kaikyo.app.atps.libs</groupId>
+			<groupId>ar.com.dynamicmcs.app.atps.libs</groupId>
 			<artifactId>Tasks</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

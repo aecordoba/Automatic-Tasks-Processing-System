@@ -2,12 +2,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ar.com.dynamic.app.atps</groupId>
+	<groupId>ar.com.dynamicmcs.app.atps</groupId>
 	<artifactId>AutomaticTasksProcessingSystemProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Automatic Tasks Processing System Project</name>
 	<description>Automatic Tasks Processing System Project</description>
+
+	<organization>
+		<name>Dynamic M.C.S.</name>
+	</organization>
 
 	<modules>
 		<module>AutomaticTasksProcessingSystem</module>
