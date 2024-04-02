@@ -35,8 +35,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import ar.com.dynamicmcs.app.atps.core.engine.Engine;
-import ar.com.dynamicmcs.app.atps.core.engine.state.StateName;
+import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -50,7 +49,7 @@ class EngineTest {
 	 */
 	public EngineTest() {
 		super();
-		this.engine = new Engine();
+		this.engine = new Engine(new EngineStateMachine());
 	}
 
 	/**
@@ -85,7 +84,7 @@ class EngineTest {
 	@Test
 	@DisplayName("Transition State at Engine creation.")
 	void testEngineCreation() {
-		assertEquals(StateName.STOPPED, engine.getState().getName());
+		assertEquals("STOPPED", engine.getState().getName());
 	}
 
 	@Test

@@ -29,30 +29,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.dynamicmcs.app.atps.core.engine.Engine;
+import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
+import ar.com.dynamicmcs.app.atps.core.engine.state.StateChangeObserver;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
 @RestController
 @CrossOrigin(origins = "*")
-public class EngineStateMonitorController {
-	private Engine engine;
+public class EngineStateMonitorController implements StateChangeObserver {
+	private EngineStateMachine engineStateMachine;
+	private String stateName;
 	private EngineStateResponse engineStateResponse;
 
 	/**
 	 * 
 	 */
-	public EngineStateMonitorController(Engine engine) {
+	public EngineStateMonitorController(EngineStateMachine engineStateMachine) {
 		super();
-		this.engine = engine;
+		this.engineStateMachine = engineStateMachine;
+		this.engineStateMachine.attachObserver(this);
 		this.engineStateResponse = new EngineStateResponse();
 	}
 
 	@RequestMapping(value = "/state-change", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EngineStateResponse> getNewEngineState() {
-		engineStateResponse.setState(engine.getState().getName().toString());
+		engineStateResponse.setState(stateName);
 		return ResponseEntity.ok(engineStateResponse);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ar.com.dynamicmcs.app.atps.core.engine.state.StateChangeObserver#update(
+	 * java.lang.String)
+	 */
+	@Override
+	public void update(String newStateName) {
+		stateName = newStateName;
 	}
 
 	public class EngineStateResponse {
@@ -72,4 +87,5 @@ public class EngineStateMonitorController {
 			this.state = state;
 		}
 	}
+
 }

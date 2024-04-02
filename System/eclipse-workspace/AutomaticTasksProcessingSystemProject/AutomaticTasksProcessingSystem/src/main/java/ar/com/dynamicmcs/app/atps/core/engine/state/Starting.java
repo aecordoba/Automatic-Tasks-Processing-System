@@ -27,6 +27,7 @@ package ar.com.dynamicmcs.app.atps.core.engine.state;
  */
 public class Starting implements State {
 	private EngineStateMachine engineStateMachine;
+	private static final String NAME = "STARTING";
 
 	/**
 	 * @param engineStateMachine
@@ -52,8 +53,8 @@ public class Starting implements State {
 	 * @see ar.com.kaikyo.app.atps.core.engine.state.State#getName()
 	 */
 	@Override
-	public StateName getName() {
-		return StateName.STARTING;
+	public String getName() {
+		return NAME;
 	}
 
 }

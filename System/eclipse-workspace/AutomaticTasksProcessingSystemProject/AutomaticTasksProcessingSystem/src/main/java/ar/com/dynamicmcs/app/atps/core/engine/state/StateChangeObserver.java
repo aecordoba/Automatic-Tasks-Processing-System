@@ -1,5 +1,5 @@
 /*
- * 		StateName.java
+ * 		StateChangeObserver.java
  *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,14 @@
  */
 
 /**
- * 		StateName.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
+ * 		StateChangeObserver.java
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 28, 2024
  */
 package ar.com.dynamicmcs.app.atps.core.engine.state;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-public enum StateName {
-	STOPPED, STARTING, RUNNING, STOPPING
+public interface StateChangeObserver {
+	void update(String newStateName);
 }

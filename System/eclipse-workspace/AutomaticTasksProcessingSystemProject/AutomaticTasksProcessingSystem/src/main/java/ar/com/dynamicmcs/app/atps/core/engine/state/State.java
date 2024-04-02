@@ -28,5 +28,5 @@ package ar.com.dynamicmcs.app.atps.core.engine.state;
 public interface State {
 	void changeState();
 
-	StateName getName();
+	String getName();
 }
