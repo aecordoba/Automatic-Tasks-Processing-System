@@ -22,6 +22,9 @@
  */
 package ar.com.dynamicmcs.app.atps.core.engine.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,8 @@ public class EngineStateMachine {
 	private State stopping;
 	private State state;
 
+	private List<StateChangeObserver> observers;
+
 	private static final Logger log = LogManager.getLogger(EngineStateMachine.class);
 
 	/**
@@ -48,11 +53,27 @@ public class EngineStateMachine {
 		starting = new Starting(this);
 		stopping = new Stopping(this);
 		state = stopped;
+		observers = new ArrayList<>();
 	}
 
 	public void changeState() {
 		state.changeState();
+		for (StateChangeObserver observer : observers)
+			try {
+				observer.update(getCurrentStateName());
+			} catch (Exception exception) {
+				// TODO
+			}
 		log.info("Engine state changed to {}", state.getName());
+	}
+
+	/**
+	 * 
+	 * @param observer
+	 */
+	public void attachObserver(StateChangeObserver observer) {
+		observer.update(getCurrentStateName());
+		observers.add(observer);
 	}
 
 	/**
@@ -66,7 +87,7 @@ public class EngineStateMachine {
 	 * 
 	 * @return
 	 */
-	public StateName getCurrentStateName() {
+	public String getCurrentStateName() {
 		return state.getName();
 	}
 

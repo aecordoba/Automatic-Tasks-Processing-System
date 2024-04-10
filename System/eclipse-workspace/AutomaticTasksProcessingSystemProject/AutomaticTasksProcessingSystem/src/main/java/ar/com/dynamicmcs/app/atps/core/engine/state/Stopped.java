@@ -27,6 +27,7 @@ package ar.com.dynamicmcs.app.atps.core.engine.state;
  */
 public class Stopped implements State {
 	private EngineStateMachine engineStateMachine;
+	private static final String NAME = "STOPPED";
 
 	/**
 	 * @param engineStateMachine
@@ -52,8 +53,8 @@ public class Stopped implements State {
 	 * @see ar.com.kaikyo.app.atps.core.engine.state.State#getName()
 	 */
 	@Override
-	public StateName getName() {
-		return StateName.STOPPED;
+	public String getName() {
+		return NAME;
 	}
 
 }

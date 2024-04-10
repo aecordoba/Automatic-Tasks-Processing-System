@@ -69,15 +69,15 @@ class EngineStateMachineTest {
 	@DisplayName("Transitions of the state machine.")
 	void testChangeState() {
 		engineStateMachine = new EngineStateMachine();
-		assertEquals(StateName.STOPPED, engineStateMachine.getCurrentStateName());
+		assertEquals("STOPPED", engineStateMachine.getCurrentStateName());
 		engineStateMachine.changeState();
-		assertEquals(StateName.STARTING, engineStateMachine.getCurrentStateName());
+		assertEquals("STARTING", engineStateMachine.getCurrentStateName());
 		engineStateMachine.changeState();
-		assertEquals(StateName.RUNNING, engineStateMachine.getCurrentStateName());
+		assertEquals("RUNNING", engineStateMachine.getCurrentStateName());
 		engineStateMachine.changeState();
-		assertEquals(StateName.STOPPING, engineStateMachine.getCurrentStateName());
+		assertEquals("STOPPING", engineStateMachine.getCurrentStateName());
 		engineStateMachine.changeState();
-		assertEquals(StateName.STOPPED, engineStateMachine.getCurrentStateName());
+		assertEquals("STOPPED", engineStateMachine.getCurrentStateName());
 	}
 
 }

@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 
 import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
 import ar.com.dynamicmcs.app.atps.core.engine.state.State;
-import ar.com.dynamicmcs.app.atps.core.engine.state.StateName;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -42,9 +41,9 @@ public class Engine {
 	/**
 	 * @param engineStateMachine
 	 */
-	public Engine() {
+	public Engine(EngineStateMachine engineStateMachine) {
 		super();
-		this.engineStateMachine = new EngineStateMachine();
+		this.engineStateMachine = engineStateMachine;
 		log.info("Engine created in {} state.", getState().getName());
 	}
 
@@ -53,9 +52,9 @@ public class Engine {
 	 */
 	public void changeState() {
 		engineStateMachine.changeState();
-		if (engineStateMachine.getCurrentStateName() == StateName.STARTING)
+		if (engineStateMachine.getCurrentStateName().equals("STARTING"))
 			start();
-		if (engineStateMachine.getCurrentStateName() == StateName.STOPPING)
+		if (engineStateMachine.getCurrentStateName().equals("STOPPING"))
 			stop();
 	}
 
