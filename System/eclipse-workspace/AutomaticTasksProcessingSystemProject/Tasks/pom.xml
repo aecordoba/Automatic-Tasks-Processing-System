@@ -18,6 +18,19 @@
 	<organization>
 		<name>Dynamic M.C.S.</name>
 	</organization>
+	
+	<developers>
+		<developer>
+			<name>Adrián E. Córdoba</name>
+			<id>aecordoba</id>
+			<organization>Dynamic M.C.S.</organization>
+			<roles>
+				<role>System Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<inceptionYear>2024</inceptionYear>
 
 	<properties>
 		<java.version>17</java.version>
