@@ -34,7 +34,6 @@
 	
 	<properties>
 		<java.version>17</java.version>
-		<spring-statemachine.version>4.0.0</spring-statemachine.version>
 	</properties>
 
 	<dependencies>
@@ -109,17 +108,6 @@
 		</dependency>
 	</dependencies>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.statemachine</groupId>
-				<artifactId>spring-statemachine-bom</artifactId>
-				<version>${spring-statemachine.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
