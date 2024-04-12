@@ -18,7 +18,7 @@
 
 /**
  * 		StandardTask.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Jan 21, 2024
+ *  Adrián E. Córdoba [software.asia@gmail.com]		Apr 12, 2024
  */
 package ar.com.dynamicmcs.app.atps.libs.tasks;
 
@@ -27,9 +27,6 @@ import java.util.List;
 
 import ar.com.dynamicmcs.app.atps.libs.tasks.tools.Tool;
 
-/**
- * @author Adrián E. Córdoba [software.asia@gmail.com]
- */
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */

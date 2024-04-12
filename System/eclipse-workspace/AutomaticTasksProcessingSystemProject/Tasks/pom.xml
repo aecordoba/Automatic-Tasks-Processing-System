@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.2.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ar.com.dynamicmcs.app.atps.libs</groupId>
@@ -18,7 +18,7 @@
 	<organization>
 		<name>Dynamic M.C.S.</name>
 	</organization>
-	
+
 	<developers>
 		<developer>
 			<name>Adrián E. Córdoba</name>
@@ -48,5 +48,13 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<packaging>rar</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
