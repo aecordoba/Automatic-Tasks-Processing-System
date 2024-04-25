@@ -1,6 +1,6 @@
 /*
  * 		EngineStateMachineTest.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		EngineStateMachineTest.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 27, 2024
- */
 package ar.com.dynamicmcs.app.atps.core.engine.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,11 +26,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
+@SpringBootTest
 class EngineStateMachineTest {
+	@Autowired
 	private EngineStateMachine engineStateMachine;
 
 	/**
@@ -68,7 +68,6 @@ class EngineStateMachineTest {
 	@Test
 	@DisplayName("Transitions of the state machine.")
 	void testChangeState() {
-		engineStateMachine = new EngineStateMachine();
 		assertEquals("STOPPED", engineStateMachine.getCurrentStateName());
 		engineStateMachine.changeState();
 		assertEquals("STARTING", engineStateMachine.getCurrentStateName());

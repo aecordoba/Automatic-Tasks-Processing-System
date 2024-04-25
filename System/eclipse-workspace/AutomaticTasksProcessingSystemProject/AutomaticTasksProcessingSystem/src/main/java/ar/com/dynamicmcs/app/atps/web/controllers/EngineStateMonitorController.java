@@ -1,6 +1,6 @@
 /*
  * 		EngineStateMonitorController.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,12 +16,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		EngineStatusMonitorController.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Jan 31, 2024
- */
 package ar.com.dynamicmcs.app.atps.web.controllers;
 
+import org.springframework.context.ApplicationListener;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,14 +27,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
-import ar.com.dynamicmcs.app.atps.core.engine.state.StateChangeObserver;
+import ar.com.dynamicmcs.app.atps.core.engine.state.StateChangeEvent;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
 @RestController
 @CrossOrigin(origins = "*")
-public class EngineStateMonitorController implements StateChangeObserver {
+public class EngineStateMonitorController implements ApplicationListener<StateChangeEvent> {
 	private EngineStateMachine engineStateMachine;
 	private String stateName;
 	private EngineStateResponse engineStateResponse;
@@ -48,7 +45,7 @@ public class EngineStateMonitorController implements StateChangeObserver {
 	public EngineStateMonitorController(EngineStateMachine engineStateMachine) {
 		super();
 		this.engineStateMachine = engineStateMachine;
-		this.engineStateMachine.attachObserver(this);
+		this.stateName = engineStateMachine.getCurrentStateName();
 		this.engineStateResponse = new EngineStateResponse();
 	}
 
@@ -62,12 +59,12 @@ public class EngineStateMonitorController implements StateChangeObserver {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ar.com.dynamicmcs.app.atps.core.engine.state.StateChangeObserver#update(
-	 * java.lang.String)
+	 * org.springframework.context.ApplicationListener#onApplicationEvent(org.
+	 * springframework.context.ApplicationEvent)
 	 */
 	@Override
-	public void update(String newStateName) {
-		stateName = newStateName;
+	public void onApplicationEvent(StateChangeEvent event) {
+		this.stateName = event.getNewState().getName();
 	}
 
 	public class EngineStateResponse {
@@ -87,5 +84,4 @@ public class EngineStateMonitorController implements StateChangeObserver {
 			this.state = state;
 		}
 	}
-
 }

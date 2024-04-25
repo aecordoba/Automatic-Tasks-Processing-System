@@ -1,6 +1,6 @@
 /*
  * 		Engine.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		Engine.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
- */
 package ar.com.dynamicmcs.app.atps.core.engine;
 
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +26,7 @@ import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
 import ar.com.dynamicmcs.app.atps.core.engine.state.State;
 
 /**
- * @author Adrián E. Córdoba [software.asia@gmail.com]
+ * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @Component
 public class Engine {

@@ -1,6 +1,6 @@
 /*
  * 		EngineTest.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		EngineTest.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Feb 29, 2024
- */
 package ar.com.dynamicmcs.app.atps.core.engine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,23 +30,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
+@SpringBootTest
 @DisplayName("Engine tests.")
 class EngineTest {
+	@Autowired
 	private Engine engine;
-
-	/**
-	 * @param engine
-	 */
-	public EngineTest() {
-		super();
-		this.engine = new Engine(new EngineStateMachine());
-	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -89,16 +79,11 @@ class EngineTest {
 
 	@Test
 	@Tag("Performance")
-	@DisplayName("Engine start timing.")
+	@DisplayName("Engine start and stop timing.")
 	void testStartTimeout() throws InterruptedException {
-		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.start());
+		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.changeState());
+		assertEquals("RUNNING", engine.getState().getName());
+		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.changeState());
+		assertEquals("STOPPED", engine.getState().getName());
 	}
-
-	@Test
-	@Tag("Performance")
-	@DisplayName("Engine stop timing.")
-	void testStopTimeout() throws InterruptedException {
-		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.stop());
-	}
-
 }

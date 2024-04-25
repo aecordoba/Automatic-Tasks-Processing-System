@@ -1,6 +1,8 @@
 /*
- * 		StateChangeObserver.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ * 		StateChangeEvent.java						Apr 23, 2024
+ *					Adrián E. Córdoba [software.dynamicmcs@gmail.com]
+ *
+ *   Copyright (C) 2024
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,15 +18,38 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		StateChangeObserver.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 28, 2024
- */
 package ar.com.dynamicmcs.app.atps.core.engine.state;
+
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-public interface StateChangeObserver {
-	void update(String newStateName);
+public class StateChangeEvent extends ApplicationEvent {
+	private static final long serialVersionUID = 1L;
+	private State newState;
+
+	/**
+	 * 
+	 * @param source
+	 * @param newState
+	 */
+	public StateChangeEvent(Object source, State newState) {
+		super(source);
+		this.newState = newState;
+	}
+
+	/**
+	 * @return the newState
+	 */
+	public State getNewState() {
+		return newState;
+	}
+
+	/**
+	 * @param newState the newState to set
+	 */
+	public void setNewState(State newState) {
+		this.newState = newState;
+	}
 }

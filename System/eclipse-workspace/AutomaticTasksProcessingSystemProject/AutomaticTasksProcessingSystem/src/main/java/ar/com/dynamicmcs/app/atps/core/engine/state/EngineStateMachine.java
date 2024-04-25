@@ -1,6 +1,6 @@
 /*
  * 		EngineStateMachine.java
- *   Copyright (C) 2024  Adrián E. Córdoba [software.asia@gmail.com]
+ *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,17 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * 		EngineStateMachine.java
- *  Adrián E. Córdoba [software.asia@gmail.com]		Mar 1, 2024
- */
 package ar.com.dynamicmcs.app.atps.core.engine.state;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,41 +33,26 @@ public class EngineStateMachine {
 	private State starting;
 	private State stopping;
 	private State state;
-
-	private List<StateChangeObserver> observers;
+	private ApplicationEventPublisher eventPublisher;
 
 	private static final Logger log = LogManager.getLogger(EngineStateMachine.class);
 
 	/**
 	 * 
 	 */
-	public EngineStateMachine() {
+	public EngineStateMachine(ApplicationEventPublisher eventPublisher) {
 		stopped = new Stopped(this);
 		running = new Running(this);
 		starting = new Starting(this);
 		stopping = new Stopping(this);
 		state = stopped;
-		observers = new ArrayList<>();
+		this.eventPublisher = eventPublisher;
 	}
 
 	public void changeState() {
 		state.changeState();
-		for (StateChangeObserver observer : observers)
-			try {
-				observer.update(getCurrentStateName());
-			} catch (Exception exception) {
-				// TODO
-			}
+		eventPublisher.publishEvent(new StateChangeEvent(this, state));
 		log.info("Engine state changed to {}", state.getName());
-	}
-
-	/**
-	 * 
-	 * @param observer
-	 */
-	public void attachObserver(StateChangeObserver observer) {
-		observer.update(getCurrentStateName());
-		observers.add(observer);
 	}
 
 	/**
