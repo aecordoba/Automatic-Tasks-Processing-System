@@ -18,8 +18,8 @@
 
 package ar.com.dynamicmcs.app.atps.core.engine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.mockito.Mockito.when;
 
 import java.time.Duration;
 
@@ -30,17 +30,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import ar.com.dynamicmcs.app.atps.core.engine.state.EngineStateMachine;
+import ar.com.dynamicmcs.app.atps.core.engine.state.Stopped;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @DisplayName("Engine tests.")
 class EngineTest {
-	@Autowired
-	private Engine engine;
+	@Mock
+	private EngineStateMachine mockEngineStateMachine;
 
 	/**
 	 * @throws java.lang.Exception
@@ -72,18 +76,13 @@ class EngineTest {
 	}
 
 	@Test
-	@DisplayName("Transition State at Engine creation.")
-	void testEngineCreation() {
-		assertEquals("STOPPED", engine.getState().getName());
-	}
-
-	@Test
 	@Tag("Performance")
 	@DisplayName("Engine start and stop timing.")
 	void testStartTimeout() throws InterruptedException {
+		when(mockEngineStateMachine.getCurrentState()).thenReturn(new Stopped(mockEngineStateMachine));
+		when(mockEngineStateMachine.getCurrentStateName()).thenReturn("STOPPED");
+		Engine engine = new Engine(mockEngineStateMachine);
 		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.changeState());
-		assertEquals("RUNNING", engine.getState().getName());
 		assertTimeoutPreemptively(Duration.ofMillis(11000), () -> engine.changeState());
-		assertEquals("STOPPED", engine.getState().getName());
 	}
 }

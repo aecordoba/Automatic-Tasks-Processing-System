@@ -26,15 +26,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class EngineStateMachineTest {
-	@Autowired
+	@Mock
+	private ApplicationEventPublisher mockEventPublisher;
+	@InjectMocks
 	private EngineStateMachine engineStateMachine;
 
 	/**
@@ -63,6 +68,12 @@ class EngineStateMachineTest {
 	 */
 	@AfterEach
 	void tearDown() throws Exception {
+	}
+
+	@Test
+	@DisplayName("State at State Machine creation.")
+	void testEngineCreation() {
+		assertEquals("STOPPED", engineStateMachine.getCurrentStateName());
 	}
 
 	@Test

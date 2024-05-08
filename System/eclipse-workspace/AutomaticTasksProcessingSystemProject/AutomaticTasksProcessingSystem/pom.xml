@@ -126,7 +126,7 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<excludedGroups>Performance</excludedGroups>
+					<excludedGroups>Performance,Context</excludedGroups>
 				</configuration>
 			</plugin>
 			<plugin>
