@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<div th:replace="~{fragments/head.html :: head(#{systemcontrol.title})}"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="/scripts/state_monitor.js"></script>
+</head>
+<body onload="state_refresh()">
+	<div class="container">
+		<header>
+			<img th:src="@{/images/rubik.png}" alt="Rubik" />
+			<h1 th:text="#{common.header}"></h1>
+		</header>
+		<nav>
+			<ul>
+				<li class="right"><a th:href="@{/}" id="home" th:text="#{common.home}"></a></li>
+			</ul>
+		</nav>
+		<main>
+			<fieldset>
+				<legend>
+					<b th:text="#{systemcontrol.title}"></b>
+				</legend>
+				<form method="post" th:action="@{/system-control}" >
+					<fieldset>
+						<legend>
+							<b th:text="#{systemcontrol.enginestate}"></b>
+						</legend>
+						<div class="row">
+							<div class="column">
+								<input type="text" id="engineState" readonly>
+							</div>
+							<div sec:authorize="hasAuthority('ADMIN')" class="column">
+								<input type="submit" id="admin-submit" th:value="#{systemcontrol.changestate}"/>
+							</div>
+							<div sec:authorize="!hasAuthority('ADMIN')" class="column">
+								<input type="submit" th:value="#{systemcontrol.changestate}" disabled="disabled"/>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</fieldset>
+		</main>
+		<footer th:replace="~{fragments/footer.html :: footer}"> </footer>
+	</div>
+</body>
+</html>

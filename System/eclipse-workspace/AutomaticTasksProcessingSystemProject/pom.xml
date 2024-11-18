@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ar.com.dynamicmcs.app.atps</groupId>
+	<artifactId>AutomaticTasksProcessingSystemProject</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Automatic Tasks Processing System Project</name>
+	<description>Automatic Tasks Processing System Project</description>
+
+	<organization>
+		<name>Dynamic M.C.S.</name>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Adrián E. Córdoba</name>
+			<id>aecordoba</id>
+			<organization>Dynamic M.C.S.</organization>
+			<roles>
+				<role>System Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<inceptionYear>2024</inceptionYear>
+
+	<modules>
+		<module>AutomaticTasksProcessingSystem</module>
+		<module>Tasks</module>
+	</modules>
+
+</project>

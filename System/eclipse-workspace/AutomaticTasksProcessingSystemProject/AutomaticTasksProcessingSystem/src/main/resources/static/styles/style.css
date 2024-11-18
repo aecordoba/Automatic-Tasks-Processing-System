@@ -1,0 +1,251 @@
+@charset "UTF-8";
+/* General styling layout */
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	background-image: linear-gradient(to right, rgba(51, 102, 153, 0.2),
+		rgb(77, 114, 151));
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 95%;
+	justify-content: center;
+	gap: 1%;
+}
+
+header, main, .user, nav, footer {
+	padding: 1%;
+}
+
+/* Header styling */
+header {
+	display: flex;
+	justify-content: center;
+}
+
+header img {
+	width: 10%;
+	margin: 0 2%;
+	float: left;
+	margin: 0 2%;
+}
+
+header h1 {
+	font-size: 4vw;
+}
+
+/* User styling */
+.user div, input, button {
+	float: right;
+}
+
+.user form {
+	width: 100%;
+}
+
+/* Nav styling */
+nav {
+	position: sticky;
+	top: 0;
+	font-size: 90%;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: black;
+}
+
+li {
+	float: left;
+}
+
+li.right {
+	float: right;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 6px 6px;
+	text-decoration: none;
+}
+
+li a:hover:not(.active) {
+	background-color: grey;
+}
+
+li a.active {
+	background-image: linear-gradient(to left, rgba(51, 102, 153, 0.2),
+		rgb(77, 114, 151));
+}
+
+/* Main styling */
+.errorMessage {
+	color: red
+}
+
+main h1 {
+	font-size: 2.3vw;
+	text-align: center;
+}
+
+form, .bulkstatuschange {
+	width: 20rem;
+	margin: auto;
+}
+
+.row {
+	margin-top: 1%;
+}
+
+.column {
+	width: 100%;
+	float: left;
+}
+
+input[type=text], input[type=password], select {
+	width: 100%;
+}
+
+input[type=text]#engineState {
+	width: 100%;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+input[type=text].stopped {
+	background-color: #BFBFBF;
+}
+
+input[type=text].stopping {
+	background-color: #FF0000;
+}
+
+input[type=text].running {
+	background-color: #00CC00;
+}
+
+input[type=text].starting {
+	background-color:  #669999;
+}
+
+input[type=checkbox] {
+	float: left;
+}
+
+input[type=reset] {
+	float: left;
+}
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.xscroll {
+	overflow-x: auto;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table, th, td {
+	border: 1px solid;
+}
+
+th, td {
+	font-size: 0.8rem;
+	padding: 0 3px;
+}
+
+th {
+	background-color: black;
+	color: white;
+}
+
+th a {
+	color: lightgrey;
+}
+
+td {
+	background-color: white;
+	text-align: center;
+}
+
+.pagination {
+	overflow-x: auto;
+	text-align: center;
+}
+
+.page {
+	display: inline;
+	padding: 1%;
+}
+
+a {
+	color: blue;
+}
+
+/* Footer styling */
+footer p {
+	font: 1rem 'David Libre', serif;
+	color: black;
+	text-align: center;
+}
+
+/* Viewport > 600px */
+@media screen and (min-width: 600px) {
+	.container {
+		grid-template-columns: 20% 75%;
+	}
+	header, .user, .login, footer {
+		grid-column: 1/span 2;
+	}
+	header h1 {
+		font-size: 2.8vw;
+	}
+	main h1 {
+		font-size: 2vw;
+	}
+	li {
+		float: none;
+	}
+	li.right {
+		float: none;
+	}
+	.column {
+		width: 50%;
+	}
+}
+
+/* Viewport > 992px */
+@media screen and (min-width: 992px) {
+	.container {
+		grid-template-columns: 20% 70%;
+		gap: 2%;
+	}
+	header img {
+		max-width: 7%;
+	}
+	header h1 {
+		font-size: 2.5vw;
+	}
+	main h1 {
+		font-size: 1.8vw;
+	}
+}

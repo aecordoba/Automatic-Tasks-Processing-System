@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/ATPS"
+    username: "atpsapp"
+    password: "atpsapp123"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
+  resources:
+    static-locations: file:src/main/resources/static/
+    cache-period: 0
+
+logging:
+  config: config/log4j2.xml
+  level:
+    spring: info
+    ar: debug
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
