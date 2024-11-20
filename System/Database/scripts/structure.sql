@@ -10,14 +10,13 @@ USE ATPS;
 -- -----------------------------------------------------
 CREATE OR REPLACE TABLE Users (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(45) NOT NULL,
+  name VARCHAR(45) UNIQUE NOT NULL,
   password VARCHAR(128) NOT NULL,
   enabled TINYINT NULL,
   first_name VARCHAR(15) NOT NULL,
   middle_name VARCHAR(15) NULL,
   last_name VARCHAR(20) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE INDEX name_UNIQUE (name ASC))
+  PRIMARY KEY (id))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -25,7 +24,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE OR REPLACE TABLE Authorities (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(20) NOT NULL,
+  name VARCHAR(20) UNIQUE NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -62,9 +61,9 @@ CREATE OR REPLACE TABLE Job_Status(
 -- -----------------------------------------------------
 CREATE OR REPLACE TABLE Tasks(
     id INT PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
-    package VARCHAR(30) NOT NULL,
-    module VARCHAR(30) NOT NULL
+    name VARCHAR(30) UNIQUE NOT NULL,
+    jar_path VARCHAR(100) NOT NULL,
+    full_class_name VARCHAR(100) NOT NULL
 );
 
 -- -----------------------------------------------------
