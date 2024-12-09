@@ -4,6 +4,18 @@ spring:
     username: "atpsapp"
     password: "atpsapp123"
     driver-class-name: "com.mysql.cj.jdbc.Driver"
+    test:
+      url: "jdbc:h2:mem/unit_test_db;NON_KEYWORDS=user"
+      diver-class-name: "org.h2.Driver"
+      username: "sa"
+      password: "password"
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    test:
+      hibernate:
+        ddl-auto: "create-drop"
   thymeleaf:
     prefix: file:src/main/resources/templates/
     cache: false

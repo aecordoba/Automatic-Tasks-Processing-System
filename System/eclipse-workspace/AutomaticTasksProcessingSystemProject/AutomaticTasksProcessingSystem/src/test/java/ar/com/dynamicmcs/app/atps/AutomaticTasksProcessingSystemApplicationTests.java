@@ -9,5 +9,4 @@ class AutomaticTasksProcessingSystemApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
