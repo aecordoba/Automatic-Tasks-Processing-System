@@ -53,7 +53,7 @@ public class JobsRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Save a JobEntity test.")
+	@DisplayName("Save JobEntity test.")
 	public void saveJobEntityTest() {
 		tasksRepository.save(testJobEntitiesList.get(0).getTaskEntity());
 		JobEntity savedJobEntity = jobsRepository.save(testJobEntitiesList.get(0));

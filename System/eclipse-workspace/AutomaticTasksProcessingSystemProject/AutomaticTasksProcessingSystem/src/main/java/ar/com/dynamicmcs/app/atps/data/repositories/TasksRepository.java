@@ -20,13 +20,16 @@
 
 package ar.com.dynamicmcs.app.atps.data.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import ar.com.dynamicmcs.app.atps.data.model.TaskEntity;
+import ar.com.dynamicmcs.app.atps.libs.tasks.Task;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 public interface TasksRepository extends CrudRepository<TaskEntity, Long> {
-
+	Optional<TaskEntity> findByName(String name);
 }

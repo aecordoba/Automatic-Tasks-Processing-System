@@ -20,6 +20,7 @@
 
 package ar.com.dynamicmcs.app.atps.core.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -62,17 +63,17 @@ public class Engine {
 		taskEntity.setName("tarea1");
 		taskEntity.setJarPath("/home/adrian/Development/Tasks/");
 		taskEntity.setFullClassName("ar.com.Tareas.tarea1");
-		taskEntitiesService.saveTaskEntity(taskEntity);
+//		taskEntitiesService.saveTaskEntity(taskEntity);
 
 		JobEntity jobEntity1 = new JobEntity();
 		jobEntity1.setName("trabajo1");
 		jobEntity1.setTaskEntity(taskEntity);
-		jobEntitiesService.saveJobEntity(jobEntity1);
+//		jobEntitiesService.saveJobEntity(jobEntity1);
 
 		JobEntity jobEntity2 = new JobEntity();
 		jobEntity2.setName("trabajo2");
 		jobEntity2.setTaskEntity(taskEntity);
-		jobEntitiesService.saveJobEntity(jobEntity2);
+//		jobEntitiesService.saveJobEntity(jobEntity2);
 
 		DataEntity dataEntity1 = new DataEntity();
 		dataEntity1.setArgumentOrder(1);
@@ -82,11 +83,17 @@ public class Engine {
 		dataEntity2.setArgumentOrder(2);
 		dataEntity2.setData("dato-2");
 		dataEntity2.setJobEntity(jobEntity1);
+		
+		List<DataEntity> dataEntitiesList = new ArrayList<>();
+		dataEntitiesList.add(dataEntity1);
+		dataEntitiesList.add(dataEntity2);
+		jobEntitiesService.saveJobEntity(jobEntity1, dataEntitiesList);
+		jobEntitiesService.saveJobEntity(jobEntity2);
 
-		dataEntitiesService.saveDataEntity(dataEntity1);
-		dataEntitiesService.saveDataEntity(dataEntity2);
+//		dataEntitiesService.saveDataEntity(dataEntity1);
+//		dataEntitiesService.saveDataEntity(dataEntity2);
 
-		System.out.println("Job guardado!");
+//		System.out.println("Job guardado!");
 
 		List<JobEntity> jobsList = jobEntitiesService.getJobEntitiesList();
 		for (JobEntity job : jobsList) {

@@ -20,14 +20,18 @@
 
 package ar.com.dynamicmcs.app.atps.data.repositories;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
 import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
 import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
@@ -58,9 +62,7 @@ public class DataRepositoryTest {
 	}
 
 	@Test
-	// @Rollback(value = false)
-	// @Order(1)
-	@DisplayName("Save a DataEntity for a JobEntity test.")
+	@DisplayName("Save DataEntity for JobEntity test.")
 	public void saveDataEntityTest() {
 		testTaskEntity = tasksRepository.save(testTaskEntity);
 		testJobEntity.setTaskEntity(testTaskEntity);
@@ -71,16 +73,32 @@ public class DataRepositoryTest {
 		Assertions.assertThat(testDataEntity.getId()).isGreaterThan(0);
 	}
 
-	// @Test
-	// @Order(2)
-	// @DisplayName("Get a DataEntity for a JobEntity.")
-	// public void getDataEntityByJobEntity() {
-	// System.out.println("testJob: " + testJob);
-	//
-	// List<DataEntity> dataEntitiesList =
-	// dataRepository.findByJobEntity(testJob);
-	// System.out.println(testJob);
-	//
-	// Assertions.assertThat(dataEntitiesList.get(0).getId()).isEqualTo(1L);
-	// }
+	@Test
+	@DisplayName("Get DataEntity for JobEntity test.")
+	public void getDataEntityByJobEntity() {
+		testTaskEntity = tasksRepository.save(testTaskEntity);
+		testJobEntity.setTaskEntity(testTaskEntity);
+		testJobEntity = jobsRepository.save(testJobEntity);
+		testDataEntity.setJobEntity(testJobEntity);
+		testDataEntity = dataRepository.save(testDataEntity);
+		
+		List<DataEntity> dataEntitiesList = dataRepository.findByJobEntity(testJobEntity);
+
+		Assertions.assertThat(dataEntitiesList.get(0).getId()).isEqualTo(testDataEntity.getId());
+	}
+	
+	@Test
+	@DisplayName("Get DataEntity for JobEntity id test.")
+	public void getDataEntityByJobEntityId() {
+		testTaskEntity = tasksRepository.save(testTaskEntity);
+		testJobEntity.setTaskEntity(testTaskEntity);
+		testJobEntity = jobsRepository.save(testJobEntity);
+		testDataEntity.setJobEntity(testJobEntity);
+		testDataEntity = dataRepository.save(testDataEntity);
+		
+		List<DataEntity> dataEntitiesList = dataRepository.findByJobEntityId(testJobEntity.getId());
+
+		Assertions.assertThat(dataEntitiesList.get(0).getId()).isEqualTo(testDataEntity.getId());
+	}
+
 }

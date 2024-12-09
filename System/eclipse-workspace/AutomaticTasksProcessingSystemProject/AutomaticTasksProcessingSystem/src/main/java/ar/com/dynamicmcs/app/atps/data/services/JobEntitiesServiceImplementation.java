@@ -21,11 +21,17 @@
 package ar.com.dynamicmcs.app.atps.data.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
 import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
+import ar.com.dynamicmcs.app.atps.data.model.TaskEntity;
+import ar.com.dynamicmcs.app.atps.data.repositories.DataRepository;
 import ar.com.dynamicmcs.app.atps.data.repositories.JobsRepository;
+import ar.com.dynamicmcs.app.atps.data.repositories.TasksRepository;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
@@ -33,13 +39,15 @@ import ar.com.dynamicmcs.app.atps.data.repositories.JobsRepository;
 @Service
 public class JobEntitiesServiceImplementation implements JobEntitiesService {
 	private JobsRepository jobsRepository;
+	private TasksRepository tasksRepository;
+	private DataRepository dataRepository;
 
-	/**
-	 * @param jobsRepository
-	 */
-	public JobEntitiesServiceImplementation(JobsRepository jobsRepository) {
+	public JobEntitiesServiceImplementation(JobsRepository jobsRepository, TasksRepository tasksRepository,
+			DataRepository dataRepository) {
 		super();
 		this.jobsRepository = jobsRepository;
+		this.tasksRepository = tasksRepository;
+		this.dataRepository = dataRepository;
 	}
 
 	/*
@@ -50,8 +58,34 @@ public class JobEntitiesServiceImplementation implements JobEntitiesService {
 	 * (ar.com.dynamicmcs.app.atps.data.model.JobEntity)
 	 */
 	@Override
+	@Transactional
 	public JobEntity saveJobEntity(JobEntity jobEntity) {
+		Optional<TaskEntity> taskEntityOptional = tasksRepository.findByName(jobEntity.getTaskEntity().getName());
+		TaskEntity savedTaskEntity = null;
+		if (taskEntityOptional.isEmpty())
+			savedTaskEntity = tasksRepository.save(jobEntity.getTaskEntity());
+		else
+			savedTaskEntity = taskEntityOptional.get();
+		jobEntity.setTaskEntity(savedTaskEntity);
 		return jobsRepository.save(jobEntity);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ar.com.dynamicmcs.app.atps.data.services.JobEntitiesService#saveJobEntity
+	 * (ar.com.dynamicmcs.app.atps.data.model.JobEntity)
+	 */
+	@Override
+	@Transactional
+	public JobEntity saveJobEntity(JobEntity jobEntity, List<DataEntity> dataEntityList) {
+		JobEntity savedJobEntity = saveJobEntity(jobEntity);
+		for (DataEntity dataEntity : dataEntityList) {
+			dataEntity.setJobEntity(savedJobEntity);
+			dataRepository.save(dataEntity);
+		}
+		return savedJobEntity;
 	}
 
 	/*
@@ -65,5 +99,4 @@ public class JobEntitiesServiceImplementation implements JobEntitiesService {
 		List<JobEntity> jobsList = (List<JobEntity>) jobsRepository.findAll();
 		return jobsList;
 	}
-
 }

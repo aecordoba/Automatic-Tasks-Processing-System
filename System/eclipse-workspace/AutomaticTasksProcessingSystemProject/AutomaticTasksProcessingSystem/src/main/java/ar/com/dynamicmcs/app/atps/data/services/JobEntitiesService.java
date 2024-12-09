@@ -22,6 +22,7 @@ package ar.com.dynamicmcs.app.atps.data.services;
 
 import java.util.List;
 
+import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
 import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
 
 /**
@@ -29,6 +30,8 @@ import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
  */
 public interface JobEntitiesService {
 	JobEntity saveJobEntity(JobEntity jobEntity);
+
+	JobEntity saveJobEntity(JobEntity jobEntity, List<DataEntity> dataEntityList);
 
 	List<JobEntity> getJobEntitiesList();
 }

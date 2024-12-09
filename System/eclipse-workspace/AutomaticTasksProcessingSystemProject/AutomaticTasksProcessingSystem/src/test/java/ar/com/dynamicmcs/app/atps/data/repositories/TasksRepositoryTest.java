@@ -20,6 +20,8 @@
 
 package ar.com.dynamicmcs.app.atps.data.repositories;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -45,10 +47,17 @@ public class TasksRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Save a TaskEntity test.")
+	@DisplayName("Save TaskEntity test.")
 	public void saveTaskEntityTest() {
 		TaskEntity savedTaskEntity = tasksRepository.save(testTaskEntity);
 		Assertions.assertThat(savedTaskEntity.getId()).isGreaterThan(0);
 	}
 
+	@Test
+	@DisplayName("Get TaskEntity by name test.")
+	public void getTaskEntityByNameTest() {
+		TaskEntity savedTaskEntity = tasksRepository.save(testTaskEntity);
+		Optional<TaskEntity> taskEntityResult = tasksRepository.findByName(savedTaskEntity.getName());
+		Assertions.assertThat(taskEntityResult.get().getId()).isEqualTo(savedTaskEntity.getId());
+	}
 }

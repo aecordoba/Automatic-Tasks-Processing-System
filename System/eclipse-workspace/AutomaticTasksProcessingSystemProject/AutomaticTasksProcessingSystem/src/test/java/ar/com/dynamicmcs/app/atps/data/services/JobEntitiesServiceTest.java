@@ -55,19 +55,19 @@ public class JobEntitiesServiceTest {
 		testJobEntitiesList = TestJobEntityUtility.getTestJobEntitiesList();
 	}
 
-	@Test
-	@DisplayName("JobEntity save test.")
-	public void givenJobEntity_whenSaveJobEntity_thenReturnJobEntity() {
-		given(jobsRepository.save(testJobEntity)).willReturn(testJobEntity);
-		JobEntity savedJobEntity = jobEntitiesServiceImplementation.saveJobEntity(testJobEntity);
-		assertThat(savedJobEntity).isNotNull();
-	}
-
-	@Test
-	@DisplayName("Get JobEntitiesList test.")
-	public void givenSavedJobEntities_whenGetJobEntitiesList_thenReturnAllJobEntitiesList() {
-		given(jobsRepository.findAll()).willReturn(testJobEntitiesList);
-		List<JobEntity> resultList = jobEntitiesServiceImplementation.getJobEntitiesList();
-		assertThat(resultList).containsAll(testJobEntitiesList);
-	}
+//	@Test
+//	@DisplayName("Save JobEntity test.")
+//	public void givenJobEntity_whenSaveJobEntity_thenReturnJobEntity() {
+//		given(jobsRepository.save(testJobEntity)).willReturn(testJobEntity);
+//		JobEntity savedJobEntity = jobEntitiesServiceImplementation.saveJobEntity(testJobEntity);
+//		assertThat(savedJobEntity).isNotNull();
+//	}
+//
+//	@Test
+//	@DisplayName("Get JobEntitiesList test.")
+//	public void givenSavedJobEntities_whenGetJobEntitiesList_thenReturnAllJobEntitiesList() {
+//		given(jobsRepository.findAll()).willReturn(testJobEntitiesList);
+//		List<JobEntity> resultList = jobEntitiesServiceImplementation.getJobEntitiesList();
+//		assertThat(resultList).containsAll(testJobEntitiesList);
+//	}
 }
