@@ -30,5 +30,5 @@ import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
 public interface DataEntitiesService {
 	List<DataEntity> getDataEntitiesList(Long jobId);
 
-	boolean saveDataEntity(DataEntity dataEntity);
+	DataEntity saveDataEntity(DataEntity dataEntity);
 }

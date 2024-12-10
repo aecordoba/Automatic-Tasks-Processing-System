@@ -1,5 +1,5 @@
 /*
- * 		JobEntitiesServiceTest.java						Dec 7, 2024
+ * 		DataEntitiesServiceTest.java						Dec 9, 2024
  *					Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   Copyright (C) 2024
@@ -33,47 +33,35 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
 import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
 import ar.com.dynamicmcs.app.atps.data.repositories.DataRepository;
-import ar.com.dynamicmcs.app.atps.data.repositories.JobsRepository;
-import ar.com.dynamicmcs.app.atps.data.repositories.TasksRepository;
 import ar.com.dynamicmcs.app.atps.data.util.TestJobEntityUtility;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @ExtendWith(MockitoExtension.class)
-public class JobEntitiesServiceTest {
-	@Mock
-	private JobsRepository jobsRepository;
-	@Mock
-	private TasksRepository tasksRepository;
+public class DataEntitiesServiceTest {
 	@Mock
 	private DataRepository dataRepository;
 	@InjectMocks
-	private JobEntitiesServiceImplementation jobEntitiesServiceImplementation;
+	private DataEntitiesServiceImplementation dataEntitiesServiceImplementation;
 	private static JobEntity testJobEntity;
-	private static List<JobEntity> testJobEntitiesList;
+	private static List<DataEntity> testDataEntitiesList;
 
 	@BeforeAll
 	public static void setup() {
 		testJobEntity = TestJobEntityUtility.getTestJobEntity();
-		testJobEntitiesList = TestJobEntityUtility.getTestJobEntitiesList();
+		testDataEntitiesList = TestJobEntityUtility.getTestDataEntitiesList();
 	}
 
 	@Test
-	@DisplayName("Save JobEntity test.")
-	public void givenJobEntity_whenSaveJobEntity_thenReturnJobEntity() {
-		given(jobsRepository.save(testJobEntity)).willReturn(testJobEntity);
-		JobEntity savedJobEntity = jobEntitiesServiceImplementation.saveJobEntity(testJobEntity);
-		assertThat(savedJobEntity).isNotNull();
+	@DisplayName("Get DataEntitiesList for JobEntity Id test.")
+	public void givenSavedDataEntities_whenGetDataEntitiesListByJobEntityId_thenReturnAllDataEntitiesList() {
+		given(dataRepository.findByJobEntityId(testJobEntity.getId())).willReturn(testDataEntitiesList);
+		List<DataEntity> resultList = dataEntitiesServiceImplementation.getDataEntitiesList(testJobEntity.getId());
+		assertThat(resultList).containsAll(testDataEntitiesList);
 	}
 
-	@Test
-	@DisplayName("Get JobEntitiesList test.")
-	public void givenSavedJobEntities_whenGetJobEntitiesList_thenReturnAllJobEntitiesList() {
-		given(jobsRepository.findAll()).willReturn(testJobEntitiesList);
-		List<JobEntity> resultList = jobEntitiesServiceImplementation.getJobEntitiesList();
-		assertThat(resultList).containsAll(testJobEntitiesList);
-	}
 }

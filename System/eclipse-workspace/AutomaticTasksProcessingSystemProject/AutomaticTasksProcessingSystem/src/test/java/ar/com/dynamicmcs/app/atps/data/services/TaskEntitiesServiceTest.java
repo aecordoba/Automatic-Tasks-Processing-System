@@ -1,5 +1,5 @@
 /*
- * 		JobEntitiesServiceTest.java						Dec 7, 2024
+ * 		TaskEntitiesServiceTest.java						Dec 9, 2024
  *					Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   Copyright (C) 2024
@@ -23,8 +23,6 @@ package ar.com.dynamicmcs.app.atps.data.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,9 +31,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
-import ar.com.dynamicmcs.app.atps.data.repositories.DataRepository;
-import ar.com.dynamicmcs.app.atps.data.repositories.JobsRepository;
+import ar.com.dynamicmcs.app.atps.data.model.TaskEntity;
 import ar.com.dynamicmcs.app.atps.data.repositories.TasksRepository;
 import ar.com.dynamicmcs.app.atps.data.util.TestJobEntityUtility;
 
@@ -43,37 +39,24 @@ import ar.com.dynamicmcs.app.atps.data.util.TestJobEntityUtility;
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @ExtendWith(MockitoExtension.class)
-public class JobEntitiesServiceTest {
-	@Mock
-	private JobsRepository jobsRepository;
+public class TaskEntitiesServiceTest {
 	@Mock
 	private TasksRepository tasksRepository;
-	@Mock
-	private DataRepository dataRepository;
 	@InjectMocks
-	private JobEntitiesServiceImplementation jobEntitiesServiceImplementation;
-	private static JobEntity testJobEntity;
-	private static List<JobEntity> testJobEntitiesList;
+	private TaskEntitiesServiceImplementation taskEntitiesServiceImplementation;
+	private static TaskEntity testTaskEntity;
 
 	@BeforeAll
 	public static void setup() {
-		testJobEntity = TestJobEntityUtility.getTestJobEntity();
-		testJobEntitiesList = TestJobEntityUtility.getTestJobEntitiesList();
+		testTaskEntity = TestJobEntityUtility.getTestTaskEntity();
 	}
 
 	@Test
-	@DisplayName("Save JobEntity test.")
-	public void givenJobEntity_whenSaveJobEntity_thenReturnJobEntity() {
-		given(jobsRepository.save(testJobEntity)).willReturn(testJobEntity);
-		JobEntity savedJobEntity = jobEntitiesServiceImplementation.saveJobEntity(testJobEntity);
-		assertThat(savedJobEntity).isNotNull();
+	@DisplayName("Save TaskEntity test.")
+	public void givenTaskEntity_whenSaveTaskEntity_thenReturnTaskEntity() {
+		given(tasksRepository.save(testTaskEntity)).willReturn(testTaskEntity);
+		TaskEntity savedTaskEntity = taskEntitiesServiceImplementation.saveTaskEntity(testTaskEntity);
+		assertThat(savedTaskEntity).isNotNull();
 	}
 
-	@Test
-	@DisplayName("Get JobEntitiesList test.")
-	public void givenSavedJobEntities_whenGetJobEntitiesList_thenReturnAllJobEntitiesList() {
-		given(jobsRepository.findAll()).willReturn(testJobEntitiesList);
-		List<JobEntity> resultList = jobEntitiesServiceImplementation.getJobEntitiesList();
-		assertThat(resultList).containsAll(testJobEntitiesList);
-	}
 }

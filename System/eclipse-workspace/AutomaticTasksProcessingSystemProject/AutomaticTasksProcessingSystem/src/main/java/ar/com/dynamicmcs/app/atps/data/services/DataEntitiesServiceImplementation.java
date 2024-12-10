@@ -50,8 +50,8 @@ public class DataEntitiesServiceImplementation implements DataEntitiesService {
 	 * .lang.Integer)
 	 */
 	@Override
-	public List<DataEntity> getDataEntitiesList(Long jobId) {
-		List<DataEntity> dataEntitiesList = dataRepository.findByJobEntityId(jobId);
+	public List<DataEntity> getDataEntitiesList(Long jobEntityId) {
+		List<DataEntity> dataEntitiesList = dataRepository.findByJobEntityId(jobEntityId);
 		return dataEntitiesList;
 	}
 
@@ -62,16 +62,8 @@ public class DataEntitiesServiceImplementation implements DataEntitiesService {
 	 * saveDataEntity(ar.com.dynamicmcs.app.atps.data.model.DataEntity)
 	 */
 	@Override
-	public boolean saveDataEntity(DataEntity dataEntity) {
-		boolean result = false;
-		try {
-			dataRepository.save(dataEntity);
-			result = true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
+	public DataEntity saveDataEntity(DataEntity dataEntity) {
+		return dataRepository.save(dataEntity);
 	}
 
 }

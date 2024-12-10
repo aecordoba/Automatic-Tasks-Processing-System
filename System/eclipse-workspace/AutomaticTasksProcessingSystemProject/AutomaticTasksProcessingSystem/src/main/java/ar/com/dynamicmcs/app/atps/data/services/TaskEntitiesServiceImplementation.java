@@ -1,5 +1,5 @@
 /*
- * 		TasksEntitiesServiceImplementation.java						Dec 7, 2024
+ * 		TaskEntitiesServiceImplementation.java						Dec 7, 2024
  *					Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   Copyright (C) 2024
@@ -29,13 +29,13 @@ import ar.com.dynamicmcs.app.atps.data.repositories.TasksRepository;
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @Service
-public class TasksEntitiesServiceImplementation implements TaskEntitiesService {
+public class TaskEntitiesServiceImplementation implements TaskEntitiesService {
 	private TasksRepository tasksRepository;
 
 	/**
 	 * @param tasksRepository
 	 */
-	public TasksEntitiesServiceImplementation(TasksRepository tasksRepository) {
+	public TaskEntitiesServiceImplementation(TasksRepository tasksRepository) {
 		super();
 		this.tasksRepository = tasksRepository;
 	}
@@ -50,5 +50,4 @@ public class TasksEntitiesServiceImplementation implements TaskEntitiesService {
 	public TaskEntity saveTaskEntity(TaskEntity taskEntity) {
 		return tasksRepository.save(taskEntity);
 	}
-
 }
