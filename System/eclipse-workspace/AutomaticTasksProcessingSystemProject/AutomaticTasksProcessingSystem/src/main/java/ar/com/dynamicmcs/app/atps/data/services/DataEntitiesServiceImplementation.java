@@ -25,6 +25,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
+import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
 import ar.com.dynamicmcs.app.atps.data.repositories.DataRepository;
 
 /**
@@ -55,6 +56,12 @@ public class DataEntitiesServiceImplementation implements DataEntitiesService {
 		return dataEntitiesList;
 	}
 
+	@Override
+	public List<DataEntity> getDataEntitiesList(JobEntity jobEntity) {
+		List<DataEntity> dataEntitiesList = dataRepository.findByJobEntity(jobEntity);
+		return dataEntitiesList;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -65,5 +72,4 @@ public class DataEntitiesServiceImplementation implements DataEntitiesService {
 	public DataEntity saveDataEntity(DataEntity dataEntity) {
 		return dataRepository.save(dataEntity);
 	}
-
 }

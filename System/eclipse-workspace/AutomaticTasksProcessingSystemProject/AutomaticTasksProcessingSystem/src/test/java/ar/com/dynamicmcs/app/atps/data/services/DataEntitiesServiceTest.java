@@ -47,11 +47,13 @@ public class DataEntitiesServiceTest {
 	private DataRepository dataRepository;
 	@InjectMocks
 	private DataEntitiesServiceImplementation dataEntitiesServiceImplementation;
+	private static DataEntity testDataEntity;
 	private static JobEntity testJobEntity;
 	private static List<DataEntity> testDataEntitiesList;
 
 	@BeforeAll
 	public static void setup() {
+		testDataEntity = TestJobEntityUtility.getTestDataEntity();
 		testJobEntity = TestJobEntityUtility.getTestJobEntity();
 		testDataEntitiesList = TestJobEntityUtility.getTestDataEntitiesList();
 	}
@@ -62,6 +64,14 @@ public class DataEntitiesServiceTest {
 		given(dataRepository.findByJobEntityId(testJobEntity.getId())).willReturn(testDataEntitiesList);
 		List<DataEntity> resultList = dataEntitiesServiceImplementation.getDataEntitiesList(testJobEntity.getId());
 		assertThat(resultList).containsAll(testDataEntitiesList);
+	}
+
+	@Test
+	@DisplayName("Save DataEntity test.")
+	public void givenDataEntity_whenSaveDataEntity_thenReturnDataEntity() {
+		given(dataRepository.save(testDataEntity)).willReturn(testDataEntity);
+		DataEntity savedDataEntity = dataEntitiesServiceImplementation.saveDataEntity(testDataEntity);
+		assertThat(savedDataEntity).isNotNull();
 	}
 
 }

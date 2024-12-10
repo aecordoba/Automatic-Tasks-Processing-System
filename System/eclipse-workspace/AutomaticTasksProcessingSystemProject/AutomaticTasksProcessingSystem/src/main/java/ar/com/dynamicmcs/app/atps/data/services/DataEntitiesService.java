@@ -23,12 +23,15 @@ package ar.com.dynamicmcs.app.atps.data.services;
 import java.util.List;
 
 import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
+import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 public interface DataEntitiesService {
-	List<DataEntity> getDataEntitiesList(Long jobId);
+	List<DataEntity> getDataEntitiesList(Long jobEntityId);
+
+	List<DataEntity> getDataEntitiesList(JobEntity jobEntity);
 
 	DataEntity saveDataEntity(DataEntity dataEntity);
 }
