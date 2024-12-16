@@ -20,89 +20,80 @@
 
 package ar.com.dynamicmcs.app.atps.core.engine;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-
-import ar.com.dynamicmcs.app.atps.data.model.DataEntity;
-import ar.com.dynamicmcs.app.atps.data.model.JobEntity;
-import ar.com.dynamicmcs.app.atps.data.model.TaskEntity;
-import ar.com.dynamicmcs.app.atps.data.services.DataEntitiesService;
-import ar.com.dynamicmcs.app.atps.data.services.JobEntitiesService;
-import ar.com.dynamicmcs.app.atps.data.services.TaskEntitiesService;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @Component
 public class Engine {
-	private TaskEntitiesService taskEntitiesService;
-	private JobEntitiesService jobEntitiesService;
-	private DataEntitiesService dataEntitiesService;
+	private State state;
+	private ApplicationEventPublisher eventPublisher;
+
+	private static final Logger log = LogManager.getLogger(Engine.class);
+
+	public enum State {
+		STOPPED, STARTING, RUNNING, STOPPING
+	}
 
 	/**
-	 * @param jobEntitiesService
-	 * @param dataEntitiesService
+	 * @param state
 	 */
-	public Engine(JobEntitiesService jobEntitiesService, DataEntitiesService dataEntitiesService,
-			TaskEntitiesService taskEntitiesService) {
+	public Engine(ApplicationEventPublisher eventPublisher) {
 		super();
-		this.jobEntitiesService = jobEntitiesService;
-		this.dataEntitiesService = dataEntitiesService;
-		this.taskEntitiesService = taskEntitiesService;
+		this.eventPublisher = eventPublisher;
+		setState(State.STOPPED);
 	}
 
 	/**
 	 * 
 	 */
 	public boolean changeState() {
-		System.out.println("Creando job...");
+		boolean result = true;
+		if (state == State.STOPPED)
+			result = start();
+		else if (state == State.RUNNING)
+			result = stop();
+		return result;
+	}
 
-		TaskEntity taskEntity = new TaskEntity();
-		taskEntity.setName("tarea1");
-		taskEntity.setJarPath("/home/adrian/Development/Tasks/");
-		taskEntity.setFullClassName("ar.com.Tareas.tarea1");
-//		taskEntitiesService.saveTaskEntity(taskEntity);
-
-		JobEntity jobEntity1 = new JobEntity();
-		jobEntity1.setName("trabajo1");
-		jobEntity1.setTaskEntity(taskEntity);
-//		jobEntitiesService.saveJobEntity(jobEntity1);
-
-		JobEntity jobEntity2 = new JobEntity();
-		jobEntity2.setName("trabajo2");
-		jobEntity2.setTaskEntity(taskEntity);
-//		jobEntitiesService.saveJobEntity(jobEntity2);
-
-		DataEntity dataEntity1 = new DataEntity();
-		dataEntity1.setArgumentOrder(1);
-		dataEntity1.setData("dato-1");
-		dataEntity1.setJobEntity(jobEntity1);
-		DataEntity dataEntity2 = new DataEntity();
-		dataEntity2.setArgumentOrder(2);
-		dataEntity2.setData("dato-2");
-		dataEntity2.setJobEntity(jobEntity1);
-		
-		List<DataEntity> dataEntitiesList = new ArrayList<>();
-		dataEntitiesList.add(dataEntity1);
-		dataEntitiesList.add(dataEntity2);
-		jobEntitiesService.saveJobEntity(jobEntity1, dataEntitiesList);
-		jobEntitiesService.saveJobEntity(jobEntity2);
-
-//		dataEntitiesService.saveDataEntity(dataEntity1);
-//		dataEntitiesService.saveDataEntity(dataEntity2);
-
-//		System.out.println("Job guardado!");
-
-		List<JobEntity> jobsList = jobEntitiesService.getJobEntitiesList();
-		for (JobEntity job : jobsList) {
-			System.out.println(job);
-			List<DataEntity> dataList = dataEntitiesService.getDataEntitiesList(job.getId());
-			for (DataEntity data : dataList)
-				System.out.println(data);
+	private boolean start() {
+		setState(State.STARTING);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		setState(State.RUNNING);
+		return false;
+	}
 
-		return true;
+	private boolean stop() {
+		setState(State.STOPPING);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setState(State.STOPPED);
+		return false;
+	}
+
+	/**
+	 * @return the State
+	 */
+	public State getState() {
+		return state;
+	}
+
+	private void setState(State state) {
+		this.state = state;
+		eventPublisher.publishEvent(new EngineStateChangeEvent(this, state));
+		log.info("Engine state changed to {}", state.name());
 	}
 }
