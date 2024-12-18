@@ -24,5 +24,5 @@ package ar.com.dynamicmcs.app.atps.core.engine.states;
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 public enum EngineEvents {
-	START, RUN, STALL, STOP
+	START, STOP
 }

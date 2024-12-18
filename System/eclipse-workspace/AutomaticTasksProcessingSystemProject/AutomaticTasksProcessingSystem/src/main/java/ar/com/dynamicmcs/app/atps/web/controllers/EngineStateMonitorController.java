@@ -23,19 +23,23 @@ package ar.com.dynamicmcs.app.atps.web.controllers;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.statemachine.listener.StateMachineListener;
+import org.springframework.statemachine.listener.StateMachineListenerAdapter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.dynamicmcs.app.atps.core.engine.EngineStateChangeEvent;
+import ar.com.dynamicmcs.app.atps.core.engine.states.EngineEvents;
+import ar.com.dynamicmcs.app.atps.core.engine.states.EngineStates;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @RestController
 @CrossOrigin(origins = "*")
-public class EngineStateMonitorController implements ApplicationListener<EngineStateChangeEvent> {
+public class EngineStateMonitorController extends StateMachineListenerAdapter<EngineStates,EngineEvents> {
 	private String engineStateName;
 	private EngineStateResponse engineStateResponse;
 

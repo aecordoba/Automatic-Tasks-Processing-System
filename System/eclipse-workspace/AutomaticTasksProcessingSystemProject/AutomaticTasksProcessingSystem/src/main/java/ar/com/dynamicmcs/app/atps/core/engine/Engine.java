@@ -60,7 +60,7 @@ public class Engine {
 		return result;
 	}
 
-	private boolean start() {
+	public boolean start() {
 		setState(State.STARTING);
 		try {
 			Thread.sleep(10000);
@@ -72,7 +72,7 @@ public class Engine {
 		return false;
 	}
 
-	private boolean stop() {
+	public boolean stop() {
 		setState(State.STOPPING);
 		try {
 			Thread.sleep(10000);

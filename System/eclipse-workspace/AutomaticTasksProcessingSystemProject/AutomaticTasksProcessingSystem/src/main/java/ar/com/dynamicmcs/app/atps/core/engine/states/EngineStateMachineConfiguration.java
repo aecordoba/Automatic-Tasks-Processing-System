@@ -22,42 +22,43 @@ package ar.com.dynamicmcs.app.atps.core.engine.states;
 
 import java.util.EnumSet;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 
+import ar.com.dynamicmcs.app.atps.core.engine.Engine;
+
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
+@Configuration
+@EnableStateMachineFactory
 public class EngineStateMachineConfiguration extends EnumStateMachineConfigurerAdapter<EngineStates, EngineEvents> {
+	private final Engine engine;
+
+	/**
+	 * @param engine
+	 */
+	public EngineStateMachineConfiguration(Engine engine) {
+		super();
+		this.engine = engine;
+	}
+
 	@Override
 	public void configure(StateMachineStateConfigurer<EngineStates, EngineEvents> states) throws Exception {
-		states.withStates()
-				.initial(EngineStates.STOPPED)
-				.states(EnumSet.allOf(EngineStates.class));
+		states.withStates().initial(EngineStates.STOPPED).states(EnumSet.allOf(EngineStates.class));
 	}
 
 	@Override
 	public void configure(StateMachineTransitionConfigurer<EngineStates, EngineEvents> transitions) throws Exception {
-		transitions
-				.withExternal()
-				.source(EngineStates.STOPPED)
-				.target(EngineStates.STARTING)
-				.event(EngineEvents.START)
-				.and()
-				.withExternal()
-				.source(EngineStates.STARTING)
-				.target(EngineStates.RUNNING)
-				.event(EngineEvents.RUN)
-				.and()
-				.withExternal()
-				.source(EngineStates.RUNNING)
-				.target(EngineStates.STOPPING)
-				.event(EngineEvents.STALL)
-				.and()
-				.withExternal()
-				.source(EngineStates.STOPPING)
-				.target(EngineStates.STOPPED)
-				.event(EngineEvents.STOP);
+		transitions.withExternal().source(EngineStates.STOPPED).target(EngineStates.RUNNING).event(EngineEvents.START)
+				.action(context -> {
+					engine.start();
+				}).and().withExternal().source(EngineStates.RUNNING).target(EngineStates.STOPPED)
+				.event(EngineEvents.STOP).action(context -> {
+					engine.stop();
+				});
 	}
 }
