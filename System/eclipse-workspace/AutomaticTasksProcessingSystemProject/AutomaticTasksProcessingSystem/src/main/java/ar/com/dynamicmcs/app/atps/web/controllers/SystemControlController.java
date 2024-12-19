@@ -19,9 +19,11 @@
 package ar.com.dynamicmcs.app.atps.web.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.dynamicmcs.app.atps.core.engine.services.EngineStateService;
 
@@ -47,8 +49,12 @@ public class SystemControlController {
 	}
 
 	@PostMapping
-	public String changeEngineState() {
-		engineStateService.startEngine();
+	public String changeEngineState(@RequestParam("action") String action, Model model) {
+		System.out.println(action);
+		if (action.equals("start"))
+			engineStateService.startEngine();
+		else
+			engineStateService.stopEngine();
 		return "private/system-control";
 	}
 }

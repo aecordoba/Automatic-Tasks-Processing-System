@@ -129,16 +129,8 @@ input[type=text].stopped {
 	background-color: #BFBFBF;
 }
 
-input[type=text].stopping {
-	background-color: #FF0000;
-}
-
 input[type=text].running {
 	background-color: #00CC00;
-}
-
-input[type=text].starting {
-	background-color:  #669999;
 }
 
 input[type=checkbox] {
