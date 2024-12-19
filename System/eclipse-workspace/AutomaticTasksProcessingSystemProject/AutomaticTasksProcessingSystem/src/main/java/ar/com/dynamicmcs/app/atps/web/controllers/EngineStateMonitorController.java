@@ -22,9 +22,13 @@ package ar.com.dynamicmcs.app.atps.web.controllers;
 
 import java.util.Locale;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
 import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.transition.Transition;
@@ -42,10 +46,12 @@ import ar.com.dynamicmcs.app.atps.core.engine.states.EngineStates;
 @RestController
 @CrossOrigin(origins = "*")
 public class EngineStateMonitorController extends StateMachineListenerAdapter<EngineStates, EngineEvents> {
-	private String engineStateName = "STOPPED";
+	private String engineStateName;
 	private boolean transition;
 	private EngineStateResponse engineStateResponse;
 	private MessageSource messageSource;
+
+	private static final Logger log = LogManager.getLogger(EngineStateMonitorController.class);
 
 	/**
 	 * @param engineStateName
@@ -55,6 +61,8 @@ public class EngineStateMonitorController extends StateMachineListenerAdapter<En
 		super();
 		this.messageSource = messageSource;
 		this.engineStateResponse = new EngineStateResponse();
+		this.engineStateName = "STOPPED";
+		this.transition = false;
 	}
 
 	@RequestMapping(value = "/state-change", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,8 +75,6 @@ public class EngineStateMonitorController extends StateMachineListenerAdapter<En
 		engineStateResponse
 				.setButtonLabel(messageSource.getMessage("systemcontrol.button.label." + action, null, locale));
 		engineStateResponse.setButtonAction(action);
-
-		System.out.println(engineStateResponse);
 		return ResponseEntity.ok(engineStateResponse);
 	}
 
@@ -76,14 +82,14 @@ public class EngineStateMonitorController extends StateMachineListenerAdapter<En
 	public void stateChanged(State<EngineStates, EngineEvents> from, State<EngineStates, EngineEvents> to) {
 		this.engineStateName = to.getId().name();
 		this.transition = false;
-		System.out.println("Monitor controller: " + engineStateName);
-		System.out.println("Transition: " + this.transition);
+		log.info("Engine state changed to {}.", engineStateName);
 	}
 
 	@Override
 	public void transitionStarted(Transition<EngineStates, EngineEvents> transition) {
 		this.transition = true;
-		System.out.println("Transition: " + this.transition);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		log.info("Engine state transition {} started by {}.", transition.getName(), auth.getName());
 	}
 
 	public class EngineStateResponse {

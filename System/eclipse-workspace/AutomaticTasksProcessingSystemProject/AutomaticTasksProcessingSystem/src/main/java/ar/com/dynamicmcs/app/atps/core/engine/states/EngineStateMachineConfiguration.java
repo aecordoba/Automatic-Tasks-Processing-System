@@ -61,6 +61,7 @@ public class EngineStateMachineConfiguration extends EnumStateMachineConfigurerA
 				.source(EngineStates.STOPPED)
 				.target(EngineStates.RUNNING)
 				.event(EngineEvents.START)
+				.name(EngineEvents.START.name())
 				.action(context -> {
 					engine.start();
 				})
@@ -69,6 +70,7 @@ public class EngineStateMachineConfiguration extends EnumStateMachineConfigurerA
 				.source(EngineStates.RUNNING)
 				.target(EngineStates.STOPPED)
 				.event(EngineEvents.STOP)
+				.name(EngineEvents.STOP.name())
 				.action(context -> {
 					engine.stop();
 				});

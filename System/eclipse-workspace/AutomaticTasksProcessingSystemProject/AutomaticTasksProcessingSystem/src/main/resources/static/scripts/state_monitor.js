@@ -19,6 +19,7 @@ function get_state() {
 				$("#engineState").addClass(data["displayClass"]);
 				$("#engineState").val(data["display"]);
 				$("#admin-submit").val(data["buttonLabel"]);
+				$("#submit").val(data["buttonLabel"]);
 				$("#action").val(data["buttonAction"]);
 			}
 			if(data["onTransition"]) {

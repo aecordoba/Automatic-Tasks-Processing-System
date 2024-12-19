@@ -33,10 +33,10 @@
 								<input type="text" id="engineState" readonly>
 							</div>
 							<div sec:authorize="hasAuthority('ADMIN')" class="column">
-								<input type="submit" id="admin-submit" th:value="#{systemcontrol.changestate}"/>
+								<input type="submit" id="admin-submit" th:value="..."/>
 							</div>
 							<div sec:authorize="!hasAuthority('ADMIN')" class="column">
-								<input type="submit" th:value="#{systemcontrol.changestate}" disabled="disabled"/>
+								<input type="submit" id="submit" th:value="..." disabled="disabled"/>
 							</div>
 						</div>
 					</fieldset>

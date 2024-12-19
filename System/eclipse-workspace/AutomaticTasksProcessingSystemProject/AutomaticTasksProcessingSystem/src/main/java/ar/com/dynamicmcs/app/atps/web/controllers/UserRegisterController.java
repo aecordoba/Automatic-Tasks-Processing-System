@@ -46,11 +46,11 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/user-register")
 public class UserRegisterController {
-	private static final Logger log = LogManager.getLogger(UserRegisterController.class);
-
 	private UsersService usersService;
 	private AuthoritiesService authoritiesService;
 	private PasswordEncoder passwordEncoder;
+
+	private static final Logger log = LogManager.getLogger(UserRegisterController.class);
 
 	/**
 	 * @param usersService

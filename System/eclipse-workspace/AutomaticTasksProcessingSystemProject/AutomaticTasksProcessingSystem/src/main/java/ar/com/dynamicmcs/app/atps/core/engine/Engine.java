@@ -40,14 +40,12 @@ public class Engine {
 	}
 
 	public boolean start() {
-		System.out.println("Engine starting!");
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Engine running!");
 		return true;
 	}
 

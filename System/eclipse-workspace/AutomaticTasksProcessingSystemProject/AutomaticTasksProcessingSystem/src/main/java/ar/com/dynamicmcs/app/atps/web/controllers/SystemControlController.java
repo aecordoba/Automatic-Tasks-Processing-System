@@ -50,7 +50,6 @@ public class SystemControlController {
 
 	@PostMapping
 	public String changeEngineState(@RequestParam("action") String action, Model model) {
-		System.out.println(action);
 		if (action.equals("start"))
 			engineStateService.startEngine();
 		else
