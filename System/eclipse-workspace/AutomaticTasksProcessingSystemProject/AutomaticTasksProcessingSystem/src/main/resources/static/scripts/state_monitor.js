@@ -35,14 +35,6 @@ function get_state() {
 				} else {
 					$("#admin-submit").prop("disabled", false);
 				}
-				
-				if(data["state"] == "STOPPED") {
-					$("#admin-submit").val("[[#{systemcontrol.button.start}]]");
-				}
-
-				if(data["state"] == "RUNNING") {
-					$("#admin-submit").val(/*[[#{systemcontrol.button.stop}]]*/);
-				}
 			}
         },
         error: function (e) {

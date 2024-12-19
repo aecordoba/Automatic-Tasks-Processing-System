@@ -1,5 +1,5 @@
 /*
- * 		EngineStateChangeEvent.java						Dec 14, 2024
+ * 		EngineStateService.java						Dec 18, 2024
  *					Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   Copyright (C) 2024
@@ -18,37 +18,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ar.com.dynamicmcs.app.atps.core.engine;
-
-import org.springframework.context.ApplicationEvent;
+package ar.com.dynamicmcs.app.atps.core.engine.services;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
-public class EngineStateChangeEvent extends ApplicationEvent {
-	private static final long serialVersionUID = 1L;
-	private Engine.State engineState;
+public interface EngineStateService {
+	void startEngine();
 
-	/**
-	 * @param source
-	 * @param newState
-	 */
-	public EngineStateChangeEvent(Object source, Engine.State engineState) {
-		super(source);
-		this.engineState = engineState;
-	}
-
-	/**
-	 * @return the newState
-	 */
-	public Engine.State getEngineState() {
-		return engineState;
-	}
-
-	/**
-	 * @param newState the newState to set
-	 */
-	public void setNewState(Engine.State engineState) {
-		this.engineState = engineState;
-	}
+	void stopEngine();
 }

@@ -10,24 +10,27 @@ import org.springframework.stereotype.Service;
 
 import ar.com.dynamicmcs.app.atps.core.engine.states.EngineEvents;
 import ar.com.dynamicmcs.app.atps.core.engine.states.EngineStates;
+import ar.com.dynamicmcs.app.atps.web.controllers.EngineStateMonitorController;
 import reactor.core.publisher.Mono;
 
 /**
  * 
  */
 @Service
-public class EngineService {
+public class EngineStateServiceImplementation implements EngineStateService {
 	private final StateMachine<EngineStates, EngineEvents> stateMachine;
-	
+
 	/**
 	 * 
 	 * @param stateMachineFactory
 	 */
-	public EngineService(StateMachineFactory<EngineStates, EngineEvents> stateMachineFactory) {
+	public EngineStateServiceImplementation(StateMachineFactory<EngineStates, EngineEvents> stateMachineFactory,
+			EngineStateMonitorController listener) {
 		this.stateMachine = stateMachineFactory.getStateMachine();
 		this.stateMachine.startReactively().block();
+		this.stateMachine.addStateListener(listener);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -47,6 +50,6 @@ public class EngineService {
 	 * @return
 	 */
 	public EngineStates getCurrentState() {
-		return  stateMachine.getState().getId();
+		return stateMachine.getState().getId();
 	}
 }

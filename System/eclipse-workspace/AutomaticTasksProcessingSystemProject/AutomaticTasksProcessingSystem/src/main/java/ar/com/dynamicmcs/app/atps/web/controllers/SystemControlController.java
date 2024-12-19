@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ar.com.dynamicmcs.app.atps.core.engine.Engine;
+import ar.com.dynamicmcs.app.atps.core.engine.services.EngineStateService;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -31,14 +31,14 @@ import ar.com.dynamicmcs.app.atps.core.engine.Engine;
 @Controller
 @RequestMapping("/system-control")
 public class SystemControlController {
-	private Engine engine;
+	private final EngineStateService engineStateService;
 
 	/**
 	 * @param engine
 	 */
-	public SystemControlController(Engine engine) {
+	public SystemControlController(EngineStateService engineStateService) {
 		super();
-		this.engine = engine;
+		this.engineStateService = engineStateService;
 	}
 
 	@GetMapping
@@ -48,7 +48,7 @@ public class SystemControlController {
 
 	@PostMapping
 	public String changeEngineState() {
-		engine.changeState();
+		engineStateService.startEngine();
 		return "private/system-control";
 	}
 }

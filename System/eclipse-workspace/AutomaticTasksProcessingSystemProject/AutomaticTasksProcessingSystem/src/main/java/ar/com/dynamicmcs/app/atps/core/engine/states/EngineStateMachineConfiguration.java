@@ -48,16 +48,28 @@ public class EngineStateMachineConfiguration extends EnumStateMachineConfigurerA
 
 	@Override
 	public void configure(StateMachineStateConfigurer<EngineStates, EngineEvents> states) throws Exception {
-		states.withStates().initial(EngineStates.STOPPED).states(EnumSet.allOf(EngineStates.class));
+		states
+				.withStates()
+				.initial(EngineStates.STOPPED)
+				.states(EnumSet.allOf(EngineStates.class));
 	}
 
 	@Override
 	public void configure(StateMachineTransitionConfigurer<EngineStates, EngineEvents> transitions) throws Exception {
-		transitions.withExternal().source(EngineStates.STOPPED).target(EngineStates.RUNNING).event(EngineEvents.START)
+		transitions
+				.withExternal()
+				.source(EngineStates.STOPPED)
+				.target(EngineStates.RUNNING)
+				.event(EngineEvents.START)
 				.action(context -> {
 					engine.start();
-				}).and().withExternal().source(EngineStates.RUNNING).target(EngineStates.STOPPED)
-				.event(EngineEvents.STOP).action(context -> {
+				})
+				.and()
+				.withExternal()
+				.source(EngineStates.RUNNING)
+				.target(EngineStates.STOPPED)
+				.event(EngineEvents.STOP)
+				.action(context -> {
 					engine.stop();
 				});
 	}

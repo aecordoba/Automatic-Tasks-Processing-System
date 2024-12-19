@@ -22,7 +22,6 @@ package ar.com.dynamicmcs.app.atps.core.engine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,70 +29,35 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Engine {
-	private State state;
-	private ApplicationEventPublisher eventPublisher;
 
 	private static final Logger log = LogManager.getLogger(Engine.class);
-
-	public enum State {
-		STOPPED, STARTING, RUNNING, STOPPING
-	}
 
 	/**
 	 * @param state
 	 */
-	public Engine(ApplicationEventPublisher eventPublisher) {
+	public Engine() {
 		super();
-		this.eventPublisher = eventPublisher;
-		setState(State.STOPPED);
-	}
-
-	/**
-	 * 
-	 */
-	public boolean changeState() {
-		boolean result = true;
-		if (state == State.STOPPED)
-			result = start();
-		else if (state == State.RUNNING)
-			result = stop();
-		return result;
 	}
 
 	public boolean start() {
-		setState(State.STARTING);
+		System.out.println("Engine starting!");
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setState(State.RUNNING);
-		return false;
+		System.out.println("Engine running!");
+		return true;
 	}
 
 	public boolean stop() {
-		setState(State.STOPPING);
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setState(State.STOPPED);
 		return false;
-	}
-
-	/**
-	 * @return the State
-	 */
-	public State getState() {
-		return state;
-	}
-
-	private void setState(State state) {
-		this.state = state;
-		eventPublisher.publishEvent(new EngineStateChangeEvent(this, state));
-		log.info("Engine state changed to {}", state.name());
 	}
 }
