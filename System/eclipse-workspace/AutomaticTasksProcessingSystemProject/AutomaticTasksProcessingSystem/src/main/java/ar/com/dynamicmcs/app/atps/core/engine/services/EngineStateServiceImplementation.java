@@ -25,10 +25,10 @@ public class EngineStateServiceImplementation implements EngineStateService {
 	 * @param stateMachineFactory
 	 */
 	public EngineStateServiceImplementation(StateMachineFactory<EngineStates, EngineEvents> stateMachineFactory,
-			EngineStateMonitorController listener) {
+			EngineStateMonitorController engineStateMonitorController) {
 		this.stateMachine = stateMachineFactory.getStateMachine();
 		this.stateMachine.startReactively().block();
-		this.stateMachine.addStateListener(listener);
+		this.stateMachine.addStateListener(engineStateMonitorController);
 	}
 
 	/**

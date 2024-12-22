@@ -20,6 +20,8 @@
 
 package ar.com.dynamicmcs.app.atps.core.engine.services;
 
+import ar.com.dynamicmcs.app.atps.core.engine.states.EngineStates;
+
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
@@ -27,4 +29,6 @@ public interface EngineStateService {
 	void startEngine();
 
 	void stopEngine();
+
+	EngineStates getCurrentState();
 }
