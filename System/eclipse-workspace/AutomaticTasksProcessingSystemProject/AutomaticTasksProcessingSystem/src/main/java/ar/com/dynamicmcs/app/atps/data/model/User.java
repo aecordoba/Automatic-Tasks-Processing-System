@@ -58,57 +58,95 @@ public class User implements UserDetails {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "Users_Authorities", joinColumns = @JoinColumn(name = "user"), inverseJoinColumns = @JoinColumn(name = "authority"))
 	private Set<Authority> authoritiesSet = new HashSet<>();
-	private boolean enabled;
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "middle_name")
 	private String middleName;
 	@Column(name = "last_name")
 	private String lastName;
+	private boolean enabled;
+	private boolean locked;
+	@Column(name = "account_expired")
+	private boolean accountExpired;
+	@Column(name = "credentials_expired")
+	private boolean credentialsExpired;
 
 	/**
 	 * @param id
 	 * @param name
 	 * @param password
-	 * @param authorities
-	 * @param enabled
+	 * @param authoritiesSet
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
+	 * @param enabled
+	 * @param locked
+	 * @param accountExpired
+	 * @param credentialsExpired
 	 */
-	public User(Integer id, String name, String password, Set<Authority> authoritiesSet, boolean enabled,
-			String firstName,
-			String middleName, String lastName) {
+	public User(Integer id, String name, String password, Set<Authority> authoritiesSet, String firstName,
+			String middleName, String lastName, boolean enabled, boolean locked, boolean accountExpired,
+			boolean credentialsExpired) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.authoritiesSet = authoritiesSet;
-		this.enabled = enabled;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
+		this.enabled = enabled;
+		this.locked = locked;
+		this.accountExpired = accountExpired;
+		this.credentialsExpired = credentialsExpired;
 	}
 
 	/**
 	 * @param name
 	 * @param password
-	 * @param authorities
-	 * @param enabled
+	 * @param authoritiesSet
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
+	 * @param enabled
+	 * @param locked
+	 * @param accountExpired
+	 * @param credentialsExpired
 	 */
-	public User(String name, String password, Set<Authority> authoritiesSet, boolean enabled, String firstName,
-			String middleName, String lastName) {
+	public User(String name, String password, Set<Authority> authoritiesSet, String firstName, String middleName,
+			String lastName, boolean enabled, boolean locked, boolean accountExpired, boolean credentialsExpired) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.authoritiesSet = authoritiesSet;
-		this.enabled = enabled;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
+		this.enabled = enabled;
+		this.locked = locked;
+		this.accountExpired = accountExpired;
+		this.credentialsExpired = credentialsExpired;
+	}
+
+	/**
+	 * @param name
+	 * @param password
+	 * @param authoritiesSet
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param enabled
+	 */
+	public User(String name, String password, Set<Authority> authoritiesSet, String firstName, String middleName,
+			String lastName, boolean enabled) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.authoritiesSet = authoritiesSet;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.enabled = enabled;
 	}
 
 	/**
@@ -157,7 +195,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		return !accountExpired;
 	}
 
 	/*
@@ -168,7 +206,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !locked;
 	}
 
 	/*
@@ -179,7 +217,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
+		return !credentialsExpired;
 	}
 
 	/*
@@ -189,8 +227,10 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", enabled=" + enabled + ", firstName="
-				+ firstName + ", middleName=" + middleName + ", lastName=" + lastName + "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", authoritiesSet=" + authoritiesSet
+				+ ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", enabled="
+				+ enabled + ", locked=" + locked + ", accountExpired=" + accountExpired + ", credentialsExpired="
+				+ credentialsExpired + "]";
 	}
 
 	/*
@@ -200,7 +240,8 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(enabled, firstName, id, lastName, middleName, name, password);
+		return Objects.hash(accountExpired, authoritiesSet, credentialsExpired, enabled, firstName, id, lastName,
+				locked, middleName, name, password);
 	}
 
 	/*
@@ -217,9 +258,12 @@ public class User implements UserDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return enabled == other.enabled && Objects.equals(firstName, other.firstName) && id == other.id
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(middleName, other.middleName)
-				&& Objects.equals(name, other.name) && Objects.equals(password, other.password);
+		return accountExpired == other.accountExpired && Objects.equals(authoritiesSet, other.authoritiesSet)
+				&& credentialsExpired == other.credentialsExpired && enabled == other.enabled
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && locked == other.locked
+				&& Objects.equals(middleName, other.middleName) && Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password);
 	}
 
 	/**
@@ -265,18 +309,17 @@ public class User implements UserDetails {
 	}
 
 	/**
-	 * @return the enabled
+	 * @return the authoritiesSet
 	 */
-	public boolean isEnabled() {
-		return enabled;
+	public Set<Authority> getAuthoritiesSet() {
+		return authoritiesSet;
 	}
 
 	/**
-	 * @param enabled the enabled to set
+	 * @param authoritiesSet the authoritiesSet to set
 	 */
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setAuthoritiesSet(Set<Authority> authoritiesSet) {
+		this.authoritiesSet = authoritiesSet;
 	}
 
 	/**
@@ -322,16 +365,58 @@ public class User implements UserDetails {
 	}
 
 	/**
-	 * @return the authorities
+	 * @return the enabled
 	 */
-	public Set<Authority> getAuthoritiesSet() {
-		return authoritiesSet;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	/**
-	 * @param authorities the authorities to set
+	 * @param enabled the enabled to set
 	 */
-	public void setAuthoritiesSet(Set<Authority> authorities) {
-		this.authoritiesSet = authorities;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
+	 * @return the locked
+	 */
+	public boolean isLocked() {
+		return locked;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	/**
+	 * @return the accountExpired
+	 */
+	public boolean isAccountExpired() {
+		return accountExpired;
+	}
+
+	/**
+	 * @param accountExpired the accountExpired to set
+	 */
+	public void setAccountExpired(boolean accountExpired) {
+		this.accountExpired = accountExpired;
+	}
+
+	/**
+	 * @return the credentialsExpired
+	 */
+	public boolean isCredentialsExpired() {
+		return credentialsExpired;
+	}
+
+	/**
+	 * @param credentialsExpired the credentialsExpired to set
+	 */
+	public void setCredentialsExpired(boolean credentialsExpired) {
+		this.credentialsExpired = credentialsExpired;
 	}
 }

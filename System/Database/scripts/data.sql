@@ -17,9 +17,9 @@ INSERT INTO `ATPS`.`Authorities` VALUES (1,'ADMIN'),
 --------------------------------------------------------------------------------------
 -- Users
 --------------------------------------------------------------------------------------
-INSERT INTO Users VALUES (1,'admin','$2a$10$kEGwwhWZpV2ApEkEsTXUROFKV4vhkKxaMlZCl7XQ5IfG5Z1GFGVcC',1,'Super','','Administrator'),
-                        (2,'user','$2a$10$1lCpQKdv7FQ8ieFJwAVu0uv.x6nqhnEl3mfFJiFyLG36wBnPFtp4W',1,'User','','User'),
-                        (3,'obs','$2a$10$VR1N3m6r5POy3NZtr056y.y2axn1gmPWzfguHpO3NHKYkqnBY3Irq',1,'Observer','','Observer');
+INSERT INTO Users(id, name, password, first_name, last_name, enabled, locked, account_expired, credentials_expired) VALUES (1,'admin','$2a$10$kEGwwhWZpV2ApEkEsTXUROFKV4vhkKxaMlZCl7XQ5IfG5Z1GFGVcC','Super','Administrator',1,0,0,0),
+                        (2,'user','$2a$10$1lCpQKdv7FQ8ieFJwAVu0uv.x6nqhnEl3mfFJiFyLG36wBnPFtp4W','User','User',1,0,0,0),
+                        (3,'obs','$2a$10$VR1N3m6r5POy3NZtr056y.y2axn1gmPWzfguHpO3NHKYkqnBY3Irq','Observer','Observer',1,0,0,0);
 
 --------------------------------------------------------------------------------------
 -- Users_Authorities

@@ -12,10 +12,13 @@ CREATE OR REPLACE TABLE Users (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) UNIQUE NOT NULL,
   password VARCHAR(128) NOT NULL,
-  enabled TINYINT NULL,
   first_name VARCHAR(15) NOT NULL,
   middle_name VARCHAR(15) NULL,
   last_name VARCHAR(20) NOT NULL,
+  enabled TINYINT NULL,
+  locked TINYINT NULL,
+  account_expired TINYINT NULL,
+  credentials_expired TINYINT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

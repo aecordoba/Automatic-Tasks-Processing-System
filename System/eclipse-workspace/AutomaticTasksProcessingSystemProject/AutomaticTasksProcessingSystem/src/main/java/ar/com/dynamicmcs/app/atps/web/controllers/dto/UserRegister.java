@@ -78,7 +78,7 @@ public class UserRegister {
 	}
 
 	public User getUser(PasswordEncoder passwordEncoder) {
-		return new User(name, passwordEncoder.encode(password), authorities, enabled, firstName, middleName, lastName);
+		return new User(name, passwordEncoder.encode(password), authorities, firstName, middleName, lastName, enabled);
 	}
 
 	/**
