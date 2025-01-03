@@ -21,6 +21,7 @@ package ar.com.dynamicmcs.app.atps.data.services;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.common.cache.CacheBuilder;
@@ -28,11 +29,12 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 /**
- * @author Adrián E. Córdoba [software.asia@gmail.com]
+ * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  */
 @Service
 public class LoginAttemptsService {
-	private static final int MAX_ATTEMPTS = 3;
+	@Value("${atps.login.max-attempts}")
+	private int maxAttempts;
 	private LoadingCache<String, Integer> loginAttemptsCache;
 
 	/**
@@ -65,7 +67,7 @@ public class LoginAttemptsService {
 
 	public boolean isBlocked(String username) {
 		try {
-			return loginAttemptsCache.get(username) >= MAX_ATTEMPTS;
+			return loginAttemptsCache.get(username) >= maxAttempts;
 		} catch (ExecutionException e) {
 			return false;
 		}

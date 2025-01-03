@@ -12,7 +12,13 @@ spring:
   messages:
     basename: i18n/messages
     encoding: UTF-8
-  
+
+  logging:
+    config: config/log4j2.xml
+    level:
+      spring: info
+      ar: debug
+
 management:
   endpoints:
     web:
@@ -29,5 +35,6 @@ server:
     key-store-password: c4l1346926
     key-alias: AutomaticTasksProcessingSystem
 
-
-
+atps:
+  login:
+    max-attempts: 3
