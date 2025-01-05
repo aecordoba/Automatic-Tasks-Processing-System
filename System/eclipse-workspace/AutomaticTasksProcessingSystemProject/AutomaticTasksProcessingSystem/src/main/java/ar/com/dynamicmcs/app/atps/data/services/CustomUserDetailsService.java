@@ -53,7 +53,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * loadUserByUsername(java.lang.String)
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws LockedException, UsernameNotFoundException {
 		if (loginAttemptsService.isBlocked(username)) {
 			log.warn("User '{}' is Locked.", username);
 			throw new LockedException("User '" + username + "' is Locked");

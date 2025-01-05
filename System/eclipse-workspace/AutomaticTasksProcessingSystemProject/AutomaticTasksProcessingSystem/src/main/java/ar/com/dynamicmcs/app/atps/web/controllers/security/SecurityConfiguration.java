@@ -56,7 +56,7 @@ public class SecurityConfiguration {
 				.requestMatchers("/user-register").hasAuthority("ADMIN")
 				.requestMatchers("/sysinternals/**", "/api/engine/state").hasAnyAuthority("ADMIN", "USER")
 				.requestMatchers("/system-control", "/state-change").hasAnyAuthority("ADMIN", "USER", "OBSERVER")
-				.requestMatchers("/", "/images/**", "/styles/**", "/scripts/**").permitAll())
+				.requestMatchers("/*", "/images/**", "/styles/**", "/scripts/**").permitAll())
 				.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
 						.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
 						.defaultSuccessUrl("/", true).permitAll())
