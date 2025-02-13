@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ar.com.dynamicmcs.app.atps.web.controllers.security.handlers;
+package ar.com.dynamicmcs.app.atps.web.security.handlers;
 
 import java.io.IOException;
 

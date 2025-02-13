@@ -1,5 +1,5 @@
 /*
- * 		AuthenticationSuccessEventListener.java
+ * 		AuthenticationFailureEventListener.java
  *   Copyright (C) 2024  Adrián E. Córdoba [software.dynamicmcs@gmail.com]
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -16,14 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ar.com.dynamicmcs.app.atps.web.controllers.security.listeners;
+package ar.com.dynamicmcs.app.atps.web.security.listeners;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
 
 import ar.com.dynamicmcs.app.atps.data.services.LoginAttemptsService;
@@ -32,8 +29,8 @@ import ar.com.dynamicmcs.app.atps.data.services.LoginAttemptsService;
  * @author Adrián E. Córdoba [software.asia@gmail.com]
  */
 @Component
-public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
-	private static final Logger log = LogManager.getLogger(AuthenticationSuccessEventListener.class);
+public class AuthenticationFailureEventListener
+		implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 	@Autowired
 	private LoginAttemptsService loginAttemptsService;
 
@@ -45,10 +42,9 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 	 * springframework.context.ApplicationEvent)
 	 */
 	@Override
-	public void onApplicationEvent(AuthenticationSuccessEvent event) {
-		User user = (User) event.getAuthentication().getPrincipal();
-		loginAttemptsService.loginSuccess(user.getUsername());
-		log.info("User '{}' logged in.", user.getUsername());
+	public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
+		String username = (String) event.getAuthentication().getPrincipal();
+		loginAttemptsService.loginFailed(username);
 	}
 
 }

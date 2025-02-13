@@ -18,7 +18,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ar.com.dynamicmcs.app.atps.web.controllers.security;
+package ar.com.dynamicmcs.app.atps.web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import ar.com.dynamicmcs.app.atps.web.controllers.security.handlers.CustomAuthenticationFailureHandler;
-import ar.com.dynamicmcs.app.atps.web.controllers.security.handlers.CustomLogoutSuccessHandler;
+import ar.com.dynamicmcs.app.atps.web.security.handlers.CustomAuthenticationFailureHandler;
+import ar.com.dynamicmcs.app.atps.web.security.handlers.CustomLogoutSuccessHandler;
 
 /**
  * @author Adrián E. Córdoba [software.dynamicmcs@gmail.com]

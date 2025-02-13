@@ -18,7 +18,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ar.com.dynamicmcs.app.atps.web.api;
+package ar.com.dynamicmcs.app.atps.web.controllers.api;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
