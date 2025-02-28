@@ -18,15 +18,10 @@
 
 package ar.com.dynamicmcs.app.atps.data.services;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.dynamicmcs.app.atps.data.model.User;
 import ar.com.dynamicmcs.app.atps.data.repositories.UsersRepository;
+import ar.com.dynamicmcs.app.atps.web.security.SecurityUser;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -56,16 +52,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws LockedException, UsernameNotFoundException {
 		if (loginAttemptsService.isBlocked(username)) {
 			log.warn("User '{}' is Locked.", username);
-			throw new LockedException("User '" + username + "' is Locked");
+			throw new LockedException("User '" + username + "' is locked.");
 		}
 		User user = usersRepository.findByName(username);
 		if (user == null) {
 			log.warn("User '{}' not found", username);
-			throw new UsernameNotFoundException("User '" + username + "' not found");
+			throw new UsernameNotFoundException("User '" + username + "' not found.");
 		}
-		Set<GrantedAuthority> authorities = user.getAuthoritiesSet().stream()
-				.map((roles) -> new SimpleGrantedAuthority(roles.getName())).collect(Collectors.toSet());
 
-		return new org.springframework.security.core.userdetails.User(username, user.getPassword(), authorities);
+		SecurityUser securityUser = new SecurityUser(user);
+		return new org.springframework.security.core.userdetails.User(securityUser.getUsername(),
+				securityUser.getPassword(), securityUser.getAuthorities());
 	}
 }

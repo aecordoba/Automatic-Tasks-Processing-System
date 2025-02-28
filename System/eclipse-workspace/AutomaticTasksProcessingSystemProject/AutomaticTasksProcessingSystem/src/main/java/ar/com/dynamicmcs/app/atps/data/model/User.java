@@ -20,16 +20,9 @@
 
 package ar.com.dynamicmcs.app.atps.data.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,8 +41,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "Users")
-public class User implements UserDetails {
-	private static final long serialVersionUID = 1L;
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -156,68 +148,11 @@ public class User implements UserDetails {
 		super();
 	}
 
-	public void addAuthority(Authority authority) {
-		authoritiesSet.add(authority);
-	}
-
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
-	 * @see
-	 * org.springframework.security.core.userdetails.UserDetails#getAuthorities(
-	 * )
 	 */
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-		for (Authority authority : authoritiesSet) {
-			grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
-		}
-		return grantedAuthorities;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.security.core.userdetails.UserDetails#getUsername()
-	 */
-	@Override
 	public String getUsername() {
 		return name;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.security.core.userdetails.UserDetails#
-	 * isAccountNonExpired()
-	 */
-	@Override
-	public boolean isAccountNonExpired() {
-		return !accountExpired;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.security.core.userdetails.UserDetails#
-	 * isAccountNonLocked()
-	 */
-	@Override
-	public boolean isAccountNonLocked() {
-		return !locked;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.security.core.userdetails.UserDetails#
-	 * isCredentialsNonExpired()
-	 */
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return !credentialsExpired;
 	}
 
 	/*
