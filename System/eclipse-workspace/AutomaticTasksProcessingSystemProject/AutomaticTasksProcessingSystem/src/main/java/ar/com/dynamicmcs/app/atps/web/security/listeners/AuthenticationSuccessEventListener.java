@@ -23,10 +23,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import ar.com.dynamicmcs.app.atps.data.services.LoginAttemptsService;
+import ar.com.dynamicmcs.app.atps.web.security.SecurityUser;
 
 /**
  * @author Adrián E. Córdoba [software.asia@gmail.com]
@@ -46,9 +46,9 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 	 */
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
-		User user = (User) event.getAuthentication().getPrincipal();
-		loginAttemptsService.loginSuccess(user.getUsername());
-		log.info("User '{}' logged in.", user.getUsername());
+		SecurityUser securityUser = (SecurityUser) event.getAuthentication().getPrincipal();
+		loginAttemptsService.loginSuccess(securityUser.getUsername());
+		log.info("User '{}' logged in.", securityUser.getUsername());
 	}
 
 }

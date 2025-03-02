@@ -61,7 +61,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 
 		SecurityUser securityUser = new SecurityUser(user);
-		return new org.springframework.security.core.userdetails.User(securityUser.getUsername(),
-				securityUser.getPassword(), securityUser.getAuthorities());
+		// return new
+		// org.springframework.security.core.userdetails.User(securityUser.getUsername(),
+		// securityUser.getPassword(), securityUser.getAuthorities());
+		return securityUser;
 	}
 }
