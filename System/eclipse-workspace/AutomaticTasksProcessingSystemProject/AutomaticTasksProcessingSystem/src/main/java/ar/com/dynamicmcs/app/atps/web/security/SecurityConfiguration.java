@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,16 +53,17 @@ public class SecurityConfiguration {
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/user-register").hasAuthority("ADMIN")
+		http.httpBasic(Customizer.withDefaults());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/user-register").hasAuthority("ADMIN")
 				.requestMatchers("/sysinternals/**", "/api/engine/state").hasAnyAuthority("ADMIN", "USER")
 				.requestMatchers("/system-control", "/state-change").hasAnyAuthority("ADMIN", "USER", "OBSERVER")
-				.requestMatchers("/*", "/images/**", "/styles/**", "/scripts/**").permitAll())
-				.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
-						.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
-						.defaultSuccessUrl("/", true).permitAll())
-				.logout(logout -> logout.logoutSuccessHandler(customLogoutSuccessHandler).logoutSuccessUrl("/"))
-				.exceptionHandling(exception -> exception.accessDeniedPage("/"));
+				.requestMatchers("/*", "/images/**", "/styles/**", "/scripts/**").permitAll());
+		http.formLogin(formLogin -> formLogin.loginPage("/login").usernameParameter("user")
+				.passwordParameter("password").failureHandler(customAuthenticationFailureHandler)
+				.defaultSuccessUrl("/", true).permitAll());
+		http.logout(logout -> logout.logoutSuccessHandler(customLogoutSuccessHandler).logoutSuccessUrl("/"));
+		http.exceptionHandling(exception -> exception.accessDeniedPage("/"));
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/engine/state").hasAnyAuthority("ADMIN", "USER"));
 
 		return http.build();
 	}
